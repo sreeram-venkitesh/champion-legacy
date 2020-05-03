@@ -139,9 +139,6 @@ class MainWindow:
         medicineFrame = LabelFrame(window,text="Medicine Stock",padx=10,pady=10)
         medicineFrame.place(x=w-w/4,y=0,anchor="nw",width=w/4.1,height=h-130)
 
-        doc = Label(doctorFrame,text="Doctors!").pack()
-
-        deal = Label(dealerFrame,text="Dealers").pack()
 
         doctorList = Listbox(doctorFrame,width=300,height=400)
         doctorList.pack()
