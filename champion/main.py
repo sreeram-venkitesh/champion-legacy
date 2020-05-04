@@ -300,10 +300,13 @@ class MainWindow:
         file.add_command(label='New Medicine',command=self.newMedicine)
         file.add_command(label='Exit',command=self.window.quit)
 
-        # bill = Menu(mainmenu,tearoff=0)
-        # mainmenu.add_cascade(label="Bills",menu=bill)
-        # bill.add_command(label="New")
-        # new_bill = Menu(bill,tearoff=0)
+        bill = Menu(mainmenu,tearoff=0)
+        mainmenu.add_cascade(label="Bills",menu=bill)
+        new_bill = Menu(bill,tearoff=0)
+        bill.add_cascade(label="New",menu=new_bill)
+        new_bill.add_command(label="New Sales Bill")
+        new_bill.add_command(label="New Purchase Bill")
+        
 
 
     # def drawFrames(self,window):
