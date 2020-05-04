@@ -7,6 +7,9 @@ from classes.doctor import Doctor
 from classes.dealer import Dealer
 from classes.medicine import Medicine
 
+global doctorList
+
+
 def center(win):
     win.update_idletasks()
     width = win.winfo_width()
@@ -22,7 +25,24 @@ class MainWindow:
         w, h = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         self.window.geometry("%dx%d+0+0" % (w, h))
         self.menuinit(self.window)
-        self.drawFrames(self.window)
+        #self.drawFrames(self.window)
+        w = self.window.winfo_screenwidth()
+        h = self.window.winfo_screenheight()
+        self.doctorFrame = LabelFrame(self.window,width=w/2,height=h/2,text="Doctors",padx=10,pady=10)
+        self.doctorFrame.place(x=10, y=0, anchor="nw", width=w/4, height=h/2)
+        self.dealerFrame = LabelFrame(self.window,width=w/2,height=h/4,text="Dealers",padx=10,pady=5)
+        self.dealerFrame.place(x=10, y=h/2+5, anchor="nw", width=w/4, height=h/2.6)
+
+        self.medicineFrame = LabelFrame(self.window,text="Medicine Stock",padx=10,pady=10)
+        self.medicineFrame.place(x=w-w/4,y=0,anchor="nw",width=w/4.1,height=h-130)
+
+
+        self.doctorList = Listbox(self.doctorFrame,width=300,height=400)
+        self.doctorList.pack()
+        self.dealerList = Listbox(self.dealerFrame,width=300,height=400)
+        self.dealerList.pack()
+        self.medicineList = Listbox(self.medicineFrame,width=300,height=1000)
+        self.medicineList.pack()
         self.window.mainloop()
 
     def callback(self, P):
@@ -30,6 +50,25 @@ class MainWindow:
             return True
         else:
             return False
+
+
+    def getDoctor(self,top,name,address,phone):
+        self.doctorList.insert(0,name)
+        self.doctorList.pack()
+        top.destroy()
+        return
+    
+    def getDealer(self,top,name,address,phone):
+        self.dealerList.insert(0,name)
+        self.dealerList.pack()
+        top.destroy()
+        return
+    
+    def getMedicine(self,top,name,batch,expiry,typeMed):
+        self.medicineList.insert(0,name)
+        self.medicineList.pack()
+        top.destroy()
+        return
 
  
     def newDoctor(self):
@@ -53,7 +92,7 @@ class MainWindow:
         phoneFrame.grid(row=4,column=0,pady=10,columnspan=2)
         phone = Entry(phoneFrame,text="phone",width=60)
         phone.grid(row=0,column=0)
-        button = Button(frame,text='OK',width=20,height=3)
+        button = Button(frame,text='OK',width=20,height=3,command=lambda: self.getDoctor(top,name.get(),address.get(),phone.get()))
         button.grid(row=5,column=0,pady=10)
         button = Button(frame,text='Close',command=top.destroy,width=20,height=3)
         button.grid(row=5,column=1,pady=10)
@@ -81,7 +120,7 @@ class MainWindow:
         phoneFrame.grid(row=4,column=0,pady=10,columnspan=2)
         phone = Entry(phoneFrame,text="phone",width=60)
         phone.grid(row=0,column=0)
-        button = Button(frame,text='OK',width=20,height=3)
+        button = Button(frame,text='OK',width=20,height=3,command=lambda: self.getDealer(top,name.get(),address.get(),phone.get()))
         button.grid(row=5,column=0,pady=10)
         button = Button(frame,text='Close',command=top.destroy,width=20,height=3)
         button.grid(row=5,column=1,pady=10)
@@ -99,19 +138,19 @@ class MainWindow:
         nameFrame.grid(row=1,column=0,pady=10,columnspan=2)
         name = Entry(nameFrame,text="name",width=60)
         name.grid(row=0,column=0)
-        addressFrame = LabelFrame(frame,text="Enter Batch",padx=10,pady=10)
-        addressFrame.grid(row=2,column=0,pady=10,columnspan=2)
-        address = Entry(addressFrame,text="address",width=60)
-        address.grid(row=0,column=0)
-        phoneFrame = LabelFrame(frame,text="Enter Expiry",padx=10,pady=10)
-        phoneFrame.grid(row=4,column=0,pady=10,columnspan=2)
-        phone = Entry(phoneFrame,text="phone",width=60)
-        phone.grid(row=0,column=0)
-        phoneFrame = LabelFrame(frame,text="Enter Type of Medicine",padx=10,pady=10)
-        phoneFrame.grid(row=4,column=0,pady=10,columnspan=2)
-        phone = Entry(phoneFrame,text="phone",width=60)
-        phone.grid(row=0,column=0)
-        button = Button(frame,text='OK',width=20,height=3)
+        batchFrame = LabelFrame(frame,text="Enter Batch",padx=10,pady=10)
+        batchFrame.grid(row=2,column=0,pady=10,columnspan=2)
+        batch = Entry(batchFrame,text="batch",width=60)
+        batch.grid(row=0,column=0)
+        expiryFrame = LabelFrame(frame,text="Enter Expiry",padx=10,pady=10)
+        expiryFrame.grid(row=4,column=0,pady=10,columnspan=2)
+        expiry = Entry(expiryFrame,text="phone",width=60)
+        expiry.grid(row=0,column=0)
+        typeMedFrame = LabelFrame(frame,text="Enter Type of Medicine",padx=10,pady=10)
+        typeMedFrame.grid(row=4,column=0,pady=10,columnspan=2)
+        typeMed = Entry(typeMedFrame,text="phone",width=60)
+        typeMed.grid(row=0,column=0)
+        button = Button(frame,text='OK',width=20,height=3,command=lambda: self.getMedicine(top,name.get(),batch.get(),expiry.get(),typeMed.get()))
         button.grid(row=5,column=0,pady=10)
         button = Button(frame,text='Close',command=top.destroy,width=20,height=3)
         button.grid(row=5,column=1,pady=10)
@@ -128,7 +167,6 @@ class MainWindow:
         file.add_command(label='Exit',command=self.window.quit)
 
     def drawFrames(self,window):
-        w, h = window.winfo_screenwidth(), window.winfo_screenheight()
 
         
         doctorFrame = LabelFrame(window,width=w/2,height=h/2,text="Doctors",padx=10,pady=10)
@@ -140,14 +178,12 @@ class MainWindow:
         medicineFrame.place(x=w-w/4,y=0,anchor="nw",width=w/4.1,height=h-130)
 
 
-        doctorList = Listbox(doctorFrame,width=300,height=400)
-        doctorList.pack()
-        dealerList = Listbox(dealerFrame,width=300,height=400)
-        dealerList.pack()
-        medicineList = Listbox(medicineFrame,width=300,height=1000)
-        medicineList.pack()
-
-    
+        self.doctorList = Listbox(doctorFrame,width=300,height=400)
+        self.doctorList.pack()
+        self.dealerList = Listbox(dealerFrame,width=300,height=400)
+        self.dealerList.pack()
+        self.medicineList = Listbox(medicineFrame,width=300,height=1000)
+        self.medicineList.pack()
 
 
 if __name__ == '__main__':
