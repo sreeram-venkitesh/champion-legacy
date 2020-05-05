@@ -307,27 +307,5 @@ class MainWindow:
         new_bill.add_command(label="New Sales Bill")
         new_bill.add_command(label="New Purchase Bill")
         
-
-
-    # def drawFrames(self,window):
-
-        
-    #     doctorFrame = LabelFrame(window,width=w/2,height=h/2,text="Doctors",padx=10,pady=10)
-    #     doctorFrame.place(x=10, y=0, anchor="nw", width=w/4, height=h/2)
-    #     dealerFrame = LabelFrame(window,width=w/2,height=h/4,text="Dealers",padx=10,pady=5)
-    #     dealerFrame.place(x=10, y=h/2+5, anchor="nw", width=w/4, height=h/2.6)
-
-    #     medicineFrame = LabelFrame(window,text="Medicine Stock",padx=10,pady=10)
-    #     medicineFrame.place(x=w-w/4,y=0,anchor="nw",width=w/4.1,height=h-130)
-
-
-    #     self.doctorList = Listbox(doctorFrame,width=300,height=400)
-    #     self.doctorList.pack()
-    #     self.dealerList = Listbox(dealerFrame,width=300,height=400)
-    #     self.dealerList.pack()
-    #     self.medicineList = Listbox(medicineFrame,width=300,height=1000)
-    #     self.medicineList.pack()
-
-
 if __name__ == '__main__':
     app = MainWindow()
