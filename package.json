@@ -1,0 +1,22 @@
+{
+  "name": "champion",
+  "version": "1.0.0",
+  "description": "Open Source Billing",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fillerInk/champion.git"
+  },
+  "author": "Sreeram Venkitesh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fillerInk/champion/issues"
+  },
+  "homepage": "https://github.com/fillerInk/champion#readme",
+  "dependencies": {
+    "electron": "^9.0.0"
+  }
+}
