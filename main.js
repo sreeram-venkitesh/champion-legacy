@@ -3,7 +3,6 @@ const url = require('url');
 const path = require('path');
 
 //Classes
-const Doctor = require('./app/classes/doctor.js');
 const mainMenuTemplate =require('./mainMenuTemplate.js');
 
 const{app, BrowserWindow, Menu, ipcMain} = electron;
