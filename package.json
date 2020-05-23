@@ -4,6 +4,7 @@
   "description": "Open Source Billing",
   "main": "main.js",
   "scripts": {
+    "postinstall": "install-app-deps",
     "start": "electron ."
   },
   "repository": {
@@ -17,6 +18,12 @@
   },
   "homepage": "https://github.com/fillerInk/champion#readme",
   "dependencies": {
-    "electron": "^9.0.0"
+    "electron": "^9.0.0",
+    "jquery": "^3.5.1",
+    "sql.js": "^0.4.0",
+    "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "electron-build": "0.0.3"
   }
 }

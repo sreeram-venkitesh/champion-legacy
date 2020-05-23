@@ -16,7 +16,7 @@ function addDoctor(){
     });
     //Loading html file 
     addDoctorWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'/html/addDoctorWindow.html'),
+        pathname: path.join(__dirname,'/addDoctorWindow.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -227,5 +227,22 @@ const mainMenuTemplate = [
         ]
     }
 ];
+
+if(process.env.NODE_ENV !== 'production'){
+    mainMenuTemplate.push({
+        label: 'Developer Tools',
+        submenu:[{
+            label:'Toggle Dev Tools',
+            accelerator:'Ctrl+I',
+            click(item,focusedWindow){
+                focusedWindow.toggleDevTools();
+            }
+        },
+        {
+            role:'reload'
+        }
+    ]
+    })
+}
 
 module.exports = mainMenuTemplate;

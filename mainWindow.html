@@ -6,5 +6,29 @@
 </head>
 <body>
     <h1>Champion</h1>
+    <ul id='list'>
+
+    </ul>
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+
+        const {app} = electron;
+        //app.setPath('userData',);
+
+        console.log('ivide ethy');
+        const model = require(path.join(__dirname, 'app', 'model.js'));
+        const something = model.getPeople(path.join(__dirname,"/database/"));
+        console.log(something);
+
+        console.log(something[0].name);
+
+        const ul = document.querySelector('ul');
+        const li = document.createElement('li');
+    
+        const itemText = document.createTextNode(something[0].name);
+        li.appendChild(itemText);
+        ul.appendChild(li);
+    </script>
 </body>
 </html>

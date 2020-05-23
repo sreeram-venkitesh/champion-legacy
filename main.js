@@ -6,9 +6,13 @@ const path = require('path');
 const mainMenuTemplate =require('./mainMenuTemplate.js');
 
 const{app, BrowserWindow, Menu, ipcMain} = electron;
+const model = require(path.join(__dirname, 'app', 'model.js'))
 
 let mainWindow;
 //let addWindow;
+
+app.setPath('userData',path.join(__dirname,"/database/"));
+
 
 app.on('ready', function(){
     //creating new window
@@ -17,12 +21,21 @@ app.on('ready', function(){
             nodeIntegration:true
         }
     });
-    //Loading html file
+
+    model.initDb(app.getPath('userData'),
+    // Load a DOM stub here. See renderer.js for the fully composed DOM.
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname,'mainWindow.html'),
         protocol: 'file:',
         slashes: true
-    }));
+    }))
+    );
+    //Loading html file
+    // mainWindow.loadURL(url.format({
+    //     pathname: path.join(__dirname,'mainWindow.html'),
+    //     protocol: 'file:',
+    //     slashes: true
+    // }));
 
     mainWindow.maximize();
 
@@ -36,19 +49,3 @@ app.on('ready', function(){
 });
 
 
-if(process.env.NODE_ENV !== 'production'){
-    mainMenuTemplate.push({
-        label: 'Developer Tools',
-        submenu:[{
-            label:'Toggle Dev Tools',
-            accelerator:'Ctrl+I',
-            click(item,focusedWindow){
-                focusedWindow.toggleDevTools();
-            }
-        },
-        {
-            role:'reload'
-        }
-    ]
-    })
-}
