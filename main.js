@@ -22,14 +22,22 @@ app.on('ready', function(){
         }
     });
 
-    model.initDb(app.getPath('userData'),
+    model.initDb(app.getPath('userData'),'doctor.db',
     // Load a DOM stub here. See renderer.js for the fully composed DOM.
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname,'mainWindow.html'),
         protocol: 'file:',
         slashes: true
-    }))
-    );
+    })));
+    console.log('Doctor Db init')
+    model.initDb(app.getPath('userData'),'dealer.db',() => {
+        console.log('Dealer Db init')
+    });
+    //console.log('Dealer Db init')
+    model.initDb(app.getPath('userData'),'medicine.db',() => {
+        console.log('Medicine Db init')
+    });
+    //console.log('Medicine Db init')
     //Loading html file
     // mainWindow.loadURL(url.format({
     //     pathname: path.join(__dirname,'mainWindow.html'),

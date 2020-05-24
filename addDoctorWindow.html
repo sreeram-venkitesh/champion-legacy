@@ -32,7 +32,6 @@
         const model = require('./app/model.js');
         const form = document.querySelector('form');
 
-        var list = [];
         window.$ = window.jQuery = require('jquery')
 
         const getFormFieldValues = function (formId) {
@@ -42,29 +41,22 @@
               keyValue.values.push($(obj).val())
             })
             return keyValue
-          }
+        }
         
-
-        form.addEventListener("submit",submitForm);
 
         function submitForm(e){
             e.preventDefault();
             //console.log('event clicked');
-            //
-            
-            
             let keyValue = getFormFieldValues('doctorForm')
             console.log('keyvalue last attempt')
             console.log(keyValue)
             
-            //TODO
-            // Find the correct format to send in the entered data from the form
             model.saveFormData(path.join(__dirname,"/database/"),'doctors', keyValue, function () {
                 console.log('Write kazjhinjuu')
               });
-
-            //app.quit();
         }
+
+        form.addEventListener("submit",submitForm);
         
     </script>
 </body>

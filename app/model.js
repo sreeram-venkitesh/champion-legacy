@@ -72,14 +72,24 @@ SQL.dbClose = function (databaseHandle, databaseFileName) {
   it's passed appPath. The rest of the model operates from renderer and uses
   window.model.db.
 */
-module.exports.initDb = function (appPath, callback) {
-  let dbPath = path.join(appPath, 'example.db')
+module.exports.initDb = function (appPath, whichDb, callback) {
+  let dbPath = path.join(appPath, whichDb)
   let createDb = function (dbPath) {
     // Create a database.
-    
     let db = new SQL.Database()
-    let query = fs.readFileSync(
-    path.join(__dirname, 'db', 'doctorSchema.sql'), 'utf8')
+    let query = '';
+    switch(dbPath){
+      case path.join(appPath, 'doctor.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'doctorSchema.sql'), 'utf8')
+        break;
+      case path.join(appPath, 'dealer.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'dealerSchema.sql'), 'utf8')
+        break;
+      case path.join(appPath, 'medicine.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'medicineSchema.sql'), 'utf8')
+        break;
+    }
+    
     let result = db.exec(query)
     if (Object.keys(result).length === 0 &&
       typeof result.constructor === 'function' &&
