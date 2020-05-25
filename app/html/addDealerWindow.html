@@ -4,29 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>Add New Medicine</title>
+    <title>Add New Dealer</title>
 </head>
 <body>
     <div class='container'>
-        <form id="medicineForm">
+        <form id="dealerForm">
             <div>
                 <br/>
                 <label style='font-size:20px'>Enter Name</label>
                 <input type='text' id='name' autofocus>
-                <label style='font-size:20px'>Enter Manufacturer</label>
-                <input type='text' id='manufacturer' autofocus>
-                <label style='font-size:20px'>Enter Batch</label>
-                <input type='text' id='batch'>
-                <label style='font-size:20px'>Enter Packing</label>
-                <input type='text' id='packing'>
-                <label style='font-size:20px'>Enter Expiry</label>
-                <br/>
-                <br/>
-                <input type='month' id='expiry'>
-                <br/>
-                <br/>
-                <label style='font-size:20px'>Enter MRP</label>
-                <input type='text' id='mrp' autofocus>
+                <label style='font-size:20px'>Enter Address</label>
+                <input type='text' id='address'>
+                <label style='font-size:20px'>Enter Phone Number</label>
+                <input type='number' id='phone'>
             </div>
             <br/>
             <button class='btn waves-effect waves-light' type="submit">Create!</button>
@@ -39,7 +29,7 @@
 
         const {app} = electron;
         //app.setPath('userData',);
-        const model = require('./app/model.js');
+        const model = require('../model.js');
         const form = document.querySelector('form');
 
         window.$ = window.jQuery = require('jquery')
@@ -57,11 +47,11 @@
         function submitForm(e){
             e.preventDefault();
             //console.log('event clicked');
-            let keyValue = getFormFieldValues('medicineForm')
+            let keyValue = getFormFieldValues('dealerForm')
             console.log('keyvalue last attempt')
             console.log(keyValue)
             
-            model.saveFormData(path.join(__dirname,"/database/"),'medicine', 'medicine.db', keyValue, function () {
+            model.saveFormData("/database/",'dealers', 'dealer.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
               });
         }

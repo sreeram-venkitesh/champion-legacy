@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>Add New Dealer</title>
+    <title>Add New Doctor</title>
 </head>
 <body>
     <div class='container'>
-        <form id="dealerForm">
+        <form id='doctorForm'>
             <div>
                 <br/>
                 <label style='font-size:20px'>Enter Name</label>
@@ -47,16 +47,17 @@
         function submitForm(e){
             e.preventDefault();
             //console.log('event clicked');
-            let keyValue = getFormFieldValues('dealerForm')
+            let keyValue = getFormFieldValues('doctorForm')
             console.log('keyvalue last attempt')
             console.log(keyValue)
             
-            model.saveFormData(path.join(__dirname,"/database/"),'dealers', 'dealer.db', keyValue, function () {
+            model.saveFormData("/database/",'doctors', 'doctor.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
               });
         }
 
         form.addEventListener("submit",submitForm);
+        
     </script>
 </body>
 </html>

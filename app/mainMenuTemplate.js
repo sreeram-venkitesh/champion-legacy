@@ -16,7 +16,7 @@ function addDoctor(){
     });
     //Loading html file 
     addDoctorWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'/addDoctorWindow.html'),
+        pathname: path.join(__dirname,'/html/addDoctorWindow.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -38,7 +38,7 @@ function addDealer(){
     });
     //Loading html file 
     addDealerWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'/addDealerWindow.html'),
+        pathname: path.join(__dirname,'/html/addDealerWindow.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -60,7 +60,7 @@ function addMedicine(){
     });
     //Loading html file 
     addMedicineWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'/addMedicineWindow.html'),
+        pathname: path.join(__dirname,'/html/addMedicineWindow.html'),
         protocol: 'file:',
         slashes: true
     }));

@@ -17,12 +17,12 @@
         //app.setPath('userData',);
 
         {{/*  console.log('ivide ethy');  */}}
-        const model = require(path.join(__dirname, 'app', 'model.js'));
-        const doctorList = model.getDoctors(path.join(__dirname,"/database/"));
+        const model = require("../model.js");
+        const doctorList = model.getDoctors(path.join(__dirname,"../../database/"));
         console.log(doctorList);
-        const dealerList = model.getDealers(path.join(__dirname,"/database/"));
+        const dealerList = model.getDealers(path.join(__dirname,"../../database/"));
         console.log(dealerList);
-        const medicineList = model.getMedicines(path.join(__dirname,"/database/"));
+        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
         console.log(medicineList);
 
 

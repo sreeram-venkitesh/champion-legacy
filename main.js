@@ -3,7 +3,7 @@ const url = require('url');
 const path = require('path');
 
 //Classes
-const mainMenuTemplate =require('./mainMenuTemplate.js');
+const mainMenuTemplate =require('./app/mainMenuTemplate.js');
 
 const{app, BrowserWindow, Menu, ipcMain} = electron;
 const model = require(path.join(__dirname, 'app', 'model.js'))
@@ -25,7 +25,7 @@ app.on('ready', function(){
     model.initDb(app.getPath('userData'),'doctor.db',
     // Load a DOM stub here. See renderer.js for the fully composed DOM.
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'mainWindow.html'),
+        pathname: path.join(__dirname,'app','html','mainWindow.html'),
         protocol: 'file:',
         slashes: true
     })));
