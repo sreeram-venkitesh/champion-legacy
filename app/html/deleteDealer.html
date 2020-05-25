@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer's Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+    <div class="row" style="height: 100%;">
+        <div class="col-sm">
+            <div style="padding: 10px" >
+                <h2>Dealers List</h2>
+                <label style='font-size:20px'> Double Click to delete record</label>
+                <ul class="list-group" role="tablist">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+
+        const { app,BrowserWindow } = electron;
+        //console.log(app);
+        const model = require("../model.js");
+        const dealerList = model.getDealers(path.join(__dirname,"../../database/"));
+
+        //app.setPath('userData',path.join(__dirname,"../../database/"));
+       
+        
+        window.$ = window.jQuery = require('jquery')
+    
+        const ul = document.querySelector('ul');
+
+        const form = document.querySelector('form');
+    
+        for(const i in dealerList){
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(dealerList[i].name);
+            //li.className= "list-group-item active"
+            li.className = "list-group-item list-group-item-action";
+            
+            li.append(itemText);
+            ul.append(li);
+        }
+
+        $(window).ready(function() {
+            $(".list-group-item").on('dblclick', function(){ 
+              {{/*  $('.active').removeClass('active');
+              $(this).addClass('active');  */}}
+              var name = $(this).html(); 
+              console.log(name);
+              // Code here whatever you want or you can call other function here
+              for(const i in dealerList){
+                if(name==dealerList[i].name){
+                    var pid = dealerList[i].dealer_id;
+                    break;
+                }
+              }
+              console.log(pid);
+              model.deleteDealer(path.join(__dirname,"../../database/"),pid,()=>{
+                console.log("Deleted!");
+                location.reload();
+              })
+               
+            });
+          });
+    </script>
+    
+</body>
+</html>

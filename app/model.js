@@ -289,11 +289,11 @@ module.exports.deleteDoctor = function (appPath, pid, callback) {
   }
 }
 
-module.exports.deleteDealer = function (pid, callback) {
+module.exports.deleteDealer = function (appPath, pid, callback) {
   let dbPath = path.join(appPath,'dealer.db')
   let db = SQL.dbOpen(dbPath)
   if (db !== null) {
-    let query = 'DELETE FROM `dealers` WHERE `id` IS ?'
+    let query = 'DELETE FROM `dealers` WHERE `dealer_id` IS ?'
     let statement = db.prepare(query)
     try {
       if (statement.run([pid])) {
@@ -311,11 +311,11 @@ module.exports.deleteDealer = function (pid, callback) {
   }
 }
 
-module.exports.deleteMedicine = function (pid, callback) {
+module.exports.deleteMedicine = function (appPath, pid, callback) {
   let dbPath = path.join(appPath,'medicine.db')
   let db = SQL.dbOpen(dbPath)
   if (db !== null) {
-    let query = 'DELETE FROM `medicine` WHERE `id` IS ?'
+    let query = 'DELETE FROM `medicine` WHERE `medicine_id` IS ?'
     let statement = db.prepare(query)
     try {
       if (statement.run([pid])) {
