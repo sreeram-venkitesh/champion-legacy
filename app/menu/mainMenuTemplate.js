@@ -70,6 +70,26 @@ function addMedicine(){
     addMedicineWindow.setMenuBarVisibility(false);
 }
 
+function modifyDoctor(){
+    modifyDoctorWindow = new BrowserWindow({
+        width:1000,
+        height:800,
+        title:'Doctor Book',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    modifyDoctorWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/doctorBook.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    modifyDoctorWindow.on('close',function(){
+        modifyDoctorWindow=null;
+    });
+    modifyDoctorWindow.setMenuBarVisibility(false);
+}
+
 
 const mainMenuTemplate = [
     {
@@ -85,7 +105,10 @@ const mainMenuTemplate = [
                         }
                     },
                     {
-                        label:'Modify'
+                        label:'Modify',
+                        click(){
+                            modifyDoctor();
+                        }
                     },
                     {
                         label:'Delete'
