@@ -29,7 +29,7 @@
         const ul = document.querySelector('ul');
         {{/*  const li = document.createElement('li');  */}}
         
-        for(var i=0; i<5;i++){
+        for(const i in doctorList){
             const li = document.createElement('li');
             const itemText = document.createTextNode(doctorList[i].name);
             li.append(itemText);

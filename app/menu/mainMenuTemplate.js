@@ -130,6 +130,66 @@ function modifyMedicine(){
     modifyMedicineWindow.setMenuBarVisibility(false);
 }
 
+function deleteDoctor(){
+    deleteDoctorWindow = new BrowserWindow({
+        width:500,
+        height:800,
+        title:"Doctor;s Book",
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    deleteDoctorWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/deleteDoctor.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    deleteDoctorWindow.on('close',function(){
+        deleteDoctorWindow=null;
+    });
+    deleteDoctorWindow.setMenuBarVisibility(false);
+}
+
+function deleteDealer(){
+    deleteDealerWindow = new BrowserWindow({
+        width:500,
+        height:800,
+        title:"Dealer's Book",
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    deleteDealerWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/deleteDealer.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    deleteDealerWindow.on('close',function(){
+        deleteDealerWindow=null;
+    });
+    deleteDealerWindow.setMenuBarVisibility(false);
+}
+
+function deleteMedicine(){
+    deleteMedicineWindow = new BrowserWindow({
+        width:500,
+        height:800,
+        title:'Medicine Book',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    deleteMedicineWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/deleteMedicine.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    deleteMedicineWindow.on('close',function(){
+        deleteMedicineWindow=null;
+    });
+    deleteMedicineWindow.setMenuBarVisibility(false);
+}
+
 
 const mainMenuTemplate = [
     {
@@ -151,7 +211,10 @@ const mainMenuTemplate = [
                         }
                     },
                     {
-                        label:'Delete'
+                        label:'Delete',
+                        click(){
+                            deleteDoctor();
+                        }
                     }
                 ]  
             },
@@ -171,7 +234,10 @@ const mainMenuTemplate = [
                         }
                     },
                     {
-                        label:'Delete'
+                        label:'Delete',
+                        click(){
+                            deleteDealer();
+                        }
                     }
                 ]
             },
@@ -191,7 +257,10 @@ const mainMenuTemplate = [
                         }
                     },
                     {
-                        label:'Delete'
+                        label:'Delete',
+                        click(){
+                            deleteMedicine();
+                        }
                     }
                 ]
             },

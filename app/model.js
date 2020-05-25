@@ -267,11 +267,11 @@ module.exports.getMedicine = function (pid) {
 /*
   Delete a person's data from the database.
 */
-module.exports.deleteDoctor = function (pid, callback) {
+module.exports.deleteDoctor = function (appPath, pid, callback) {
   let dbPath = path.join(appPath,'doctor.db')
   let db = SQL.dbOpen(dbPath)
   if (db !== null) {
-    let query = 'DELETE FROM `doctors` WHERE `id` IS ?'
+    let query = 'DELETE FROM `doctors` WHERE `doctor_id` IS ?'
     let statement = db.prepare(query)
     try {
       if (statement.run([pid])) {
