@@ -8,29 +8,65 @@
 </head>
 <body>
     <div class='container'>
-        <form>
+        <form id="medicineForm">
             <div>
                 <br/>
                 <label style='font-size:20px'>Enter Name</label>
-                <input type='text' id='medicineName' autofocus>
+                <input type='text' id='name' autofocus>
                 <label style='font-size:20px'>Enter Manufacturer</label>
-                <input type='text' id='medicineManu' autofocus>
+                <input type='text' id='manufacturer' autofocus>
                 <label style='font-size:20px'>Enter Batch</label>
-                <input type='text' id='medicineBatch'>
+                <input type='text' id='batch'>
                 <label style='font-size:20px'>Enter Packing</label>
-                <input type='text' id='medicinePacking'>
+                <input type='text' id='packing'>
                 <label style='font-size:20px'>Enter Expiry</label>
                 <br/>
                 <br/>
-                <input type='month' id='medicineExp'>
+                <input type='month' id='expiry'>
                 <br/>
                 <br/>
                 <label style='font-size:20px'>Enter MRP</label>
-                <input type='text' id='medicineMrp' autofocus>
+                <input type='text' id='mrp' autofocus>
             </div>
             <br/>
             <button class='btn waves-effect waves-light' type="submit">Create!</button>
         </form>
     </div>
+
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+
+        const {app} = electron;
+        //app.setPath('userData',);
+        const model = require('./app/model.js');
+        const form = document.querySelector('form');
+
+        window.$ = window.jQuery = require('jquery')
+
+        const getFormFieldValues = function (formId) {
+            let keyValue = {columns: [], values: []}
+            $('#' + formId).find('input:visible, textarea:visible').each(function (idx, obj) {
+              keyValue.columns.push($(obj).attr('id'))
+              keyValue.values.push($(obj).val())
+            })
+            return keyValue
+        }
+        
+
+        function submitForm(e){
+            e.preventDefault();
+            //console.log('event clicked');
+            let keyValue = getFormFieldValues('medicineForm')
+            console.log('keyvalue last attempt')
+            console.log(keyValue)
+            
+            model.saveFormData(path.join(__dirname,"/database/"),'medicine', 'medicine.db', keyValue, function () {
+                console.log('Write kazjhinjuu')
+              });
+        }
+
+        form.addEventListener("submit",submitForm);
+    </script>
 </body>
 </html>

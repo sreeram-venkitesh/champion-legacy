@@ -129,8 +129,8 @@ module.exports.initDb = function (appPath, whichDb, callback) {
 /*
   Populates the People List.
 */
-module.exports.getPeople = function (appPath) {
-  let dbPath = path.join(appPath,'example.db')
+module.exports.getDoctors = function (appPath) {
+  let dbPath = path.join(appPath,'doctor.db')
   let db = SQL.dbOpen(dbPath)
   if (db !== null) {
     let query = 'SELECT * FROM `doctors` ORDER BY `name` ASC'
@@ -144,18 +144,63 @@ module.exports.getPeople = function (appPath) {
         return row
       }
     } catch (error) {
-      console.log('model.getPeople', error.message)
+      console.log('model.getDoctors', error.message)
     } finally {
       SQL.dbClose(db, dbPath)
     }
   }
 }
 
+module.exports.getDealers = function (appPath) {
+  let dbPath = path.join(appPath,'dealer.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `dealers` ORDER BY `name` ASC'
+    try {
+      let row = db.exec(query)
+      if (row !== undefined && row.length > 0) {
+        row = _rowsFromSqlDataObject(row[0])
+        // view.showPeople(row)
+        // console.log('going to print from inside fucntion')
+        // console.log(row)
+        return row
+      }
+    } catch (error) {
+      console.log('model.getDealers', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+module.exports.getMedicines = function (appPath) {
+  let dbPath = path.join(appPath,'medicine.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `medicine` ORDER BY `name` ASC'
+    try {
+      let row = db.exec(query)
+      if (row !== undefined && row.length > 0) {
+        row = _rowsFromSqlDataObject(row[0])
+        // view.showPeople(row)
+        // console.log('going to print from inside fucntion')
+        // console.log(row)
+        return row
+      }
+    } catch (error) {
+      console.log('model.getMedicines', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+  
 /*
   Fetch a person's data from the database.
 */
-module.exports.getPerson = function (pid) {
-  let db = SQL.dbOpen(window.model.db)
+module.exports.getDoctor = function (pid) {
+  let dbPath = path.join(appPath,'doctor.db')
+  let db = SQL.dbOpen(dbPath)
   if (db !== null) {
     let query = 'SELECT * FROM `doctors` WHERE `id` IS ?'
     let statement = db.prepare(query, [pid])
@@ -165,12 +210,56 @@ module.exports.getPerson = function (pid) {
         let columns = statement.getColumnNames()
         return _rowsFromSqlDataObject({values: values, columns: columns})
       } else {
-        console.log('model.getPeople', 'No data found for person_id =', pid)
+        console.log('model.getDoctor', 'No data found for person_id =', pid)
       }
     } catch (error) {
-      console.log('model.getPeople', error.message)
+      console.log('model.getDoctor', error.message)
     } finally {
-      SQL.dbClose(db, window.model.db)
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+module.exports.getDealer = function (pid) {
+  let dbPath = path.join(appPath,'dealer.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `dealers` WHERE `id` IS ?'
+    let statement = db.prepare(query, [pid])
+    try {
+      if (statement.step()) {
+        let values = [statement.get()]
+        let columns = statement.getColumnNames()
+        return _rowsFromSqlDataObject({values: values, columns: columns})
+      } else {
+        console.log('model.getDealer', 'No data found for person_id =', pid)
+      }
+    } catch (error) {
+      console.log('model.getDealer', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+module.exports.getMedicine = function (pid) {
+  let dbPath = path.join(appPath,'medicine.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `medicine` WHERE `id` IS ?'
+    let statement = db.prepare(query, [pid])
+    try {
+      if (statement.step()) {
+        let values = [statement.get()]
+        let columns = statement.getColumnNames()
+        return _rowsFromSqlDataObject({values: values, columns: columns})
+      } else {
+        console.log('model.getMedicine', 'No data found for person_id =', pid)
+      }
+    } catch (error) {
+      console.log('model.getMedicine', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
     }
   }
 }
@@ -178,8 +267,9 @@ module.exports.getPerson = function (pid) {
 /*
   Delete a person's data from the database.
 */
-module.exports.deletePerson = function (pid, callback) {
-  let db = SQL.dbOpen(window.model.db)
+module.exports.deleteDoctor = function (pid, callback) {
+  let dbPath = path.join(appPath,'doctor.db')
+  let db = SQL.dbOpen(dbPath)
   if (db !== null) {
     let query = 'DELETE FROM `doctors` WHERE `id` IS ?'
     let statement = db.prepare(query)
@@ -189,12 +279,56 @@ module.exports.deletePerson = function (pid, callback) {
           callback()
         }
       } else {
-        console.log('model.deletePerson', 'No data found for person_id =', pid)
+        console.log('model.deleteDoctor', 'No data found for person_id =', pid)
       }
     } catch (error) {
-      console.log('model.deletePerson', error.message)
+      console.log('model.deleteDoctor', error.message)
     } finally {
-      SQL.dbClose(db, window.model.db)
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+module.exports.deleteDealer = function (pid, callback) {
+  let dbPath = path.join(appPath,'dealer.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'DELETE FROM `dealers` WHERE `id` IS ?'
+    let statement = db.prepare(query)
+    try {
+      if (statement.run([pid])) {
+        if (typeof callback === 'function') {
+          callback()
+        }
+      } else {
+        console.log('model.deleteDealer', 'No data found for person_id =', pid)
+      }
+    } catch (error) {
+      console.log('model.deleteDealer', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+module.exports.deleteMedicine = function (pid, callback) {
+  let dbPath = path.join(appPath,'medicine.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'DELETE FROM `medicine` WHERE `id` IS ?'
+    let statement = db.prepare(query)
+    try {
+      if (statement.run([pid])) {
+        if (typeof callback === 'function') {
+          callback()
+        }
+      } else {
+        console.log('model.deleteMedicine', 'No data found for person_id =', pid)
+      }
+    } catch (error) {
+      console.log('model.deleteMedicine', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
     }
   }
 }
@@ -202,9 +336,10 @@ module.exports.deletePerson = function (pid, callback) {
 /*
   Insert or update a person's data in the database.
 */
-module.exports.saveFormData = function (appPath, tableName, keyValue, callback) {
+module.exports.saveFormData = function (appPath, tableName, whichDb, keyValue, callback) {
   if (keyValue.columns.length > 0) {
-    let dbPath = path.join(appPath,'example.db')
+    let dbPath = path.join(appPath, whichDb)
+    //let dbPath = path.join(appPath,'example.db')
     let db = SQL.dbOpen(dbPath)
     // let db = SQL.dbOpen(window.model.db)
     if (db !== null) {
