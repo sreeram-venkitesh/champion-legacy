@@ -90,6 +90,46 @@ function modifyDoctor(){
     modifyDoctorWindow.setMenuBarVisibility(false);
 }
 
+function modifyDealer(){
+    modifyDealerWindow = new BrowserWindow({
+        width:1000,
+        height:800,
+        title:'Dealer Book',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    modifyDealerWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/dealerBook.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    modifyDealerWindow.on('close',function(){
+        modifyDealerWindow=null;
+    });
+    modifyDealerWindow.setMenuBarVisibility(false);
+}
+
+function modifyMedicine(){
+    modifyMedicineWindow = new BrowserWindow({
+        width:1000,
+        height:800,
+        title:'Medicine Book',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    modifyMedicineWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/medicineBook.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    modifyMedicineWindow.on('close',function(){
+        modifyMedicineWindow=null;
+    });
+    modifyMedicineWindow.setMenuBarVisibility(false);
+}
+
 
 const mainMenuTemplate = [
     {
@@ -125,7 +165,10 @@ const mainMenuTemplate = [
                         }
                     },
                     {
-                        label:'Modify'
+                        label:'Modify',
+                        click(){
+                            modifyDealer();
+                        }
                     },
                     {
                         label:'Delete'
