@@ -3,7 +3,7 @@ const url = require('url');
 const path = require('path');
 
 //Classes
-const mainMenuTemplate =require('./app/mainMenuTemplate.js');
+const mainMenuTemplate =require('./app/menu/mainMenuTemplate.js');
 
 const{app, BrowserWindow, Menu, ipcMain} = electron;
 const model = require(path.join(__dirname, 'app', 'model.js'))

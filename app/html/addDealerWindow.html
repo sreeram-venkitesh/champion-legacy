@@ -29,7 +29,7 @@
 
         const {app} = electron;
         //app.setPath('userData',);
-        const model = require('../model.js');
+        const model = require(path.join(__dirname,'../model.js'));
         const form = document.querySelector('form');
 
         window.$ = window.jQuery = require('jquery')
@@ -51,7 +51,7 @@
             console.log('keyvalue last attempt')
             console.log(keyValue)
             
-            model.saveFormData("/database/",'dealers', 'dealer.db', keyValue, function () {
+            model.saveFormData(path.join(__dirname,"../../database/"),'dealers', 'dealer.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
               });
         }
