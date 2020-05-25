@@ -13,14 +13,14 @@
         <div class="col-sm" style="border-right:3px solid #333">
             <div style="padding: 10px" >
                 <h2>Doctors List</h2>
-                <ul class="list-group">
+                <ul class="list-group" role="tablist">
 
                 </ul>
             </div>
         </div>
         <div class="col-sm">
             <div style="padding: 10px;" >
-                <h2>Address Book</h2>
+                <h2>Edit Details</h2>
                 <div class='container' style="border:1px solid #333;">
                     <form id='doctorForm'>
                         <div>
@@ -33,7 +33,7 @@
                             <input type='number' id='phone'>
                         </div>
                         <br/>
-                        <button class='btn waves-effect waves-light' type="submit">Edit</button>
+                        <button class='btn waves-effect waves-light' type="submit">Submit!</button>
                     </form>
                     <br/>
                 </div>
@@ -57,12 +57,14 @@
         const nameField = document.getElementById('name');
         const addressField = document.getElementById('address');
         const phoneField = document.getElementById('phone');
+
+        const form = document.querySelector('form');
     
         for(var i=0; i<5;i++){
             const li = document.createElement('li');
             const itemText = document.createTextNode(doctorList[i].name);
             //li.className= "list-group-item active"
-            li.className = "list-group-item";
+            li.className = "list-group-item list-group-item-action";
             
             li.append(itemText);
             ul.append(li);
@@ -82,9 +84,25 @@
                     phoneField.value = doctorList[i].phone;
                 }
                }
-               git a
+               
             });
           });
+
+
+        function submitForm(e){
+            e.preventDefault();
+            //console.log('event clicked');
+            {{/*  let keyValue = getFormFieldValues('doctorForm')
+            console.log('keyvalue last attempt')
+            console.log(keyValue)
+            
+            model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
+                console.log('Write kazjhinjuu')
+                });  */}}
+            console.log("Edit Njekki njekki!");
+        }
+
+        form.addEventListener("submit",submitForm);
         
         
 
