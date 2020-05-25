@@ -113,7 +113,7 @@ function modifyDealer(){
 function modifyMedicine(){
     modifyMedicineWindow = new BrowserWindow({
         width:1000,
-        height:800,
+        height:850,
         title:'Medicine Book',
         webPreferences:{
             nodeIntegration:true
@@ -185,7 +185,10 @@ const mainMenuTemplate = [
                         }
                     },
                     {
-                        label:'Modify'
+                        label:'Modify',
+                        click(){
+                            modifyMedicine();
+                        }
                     },
                     {
                         label:'Delete'

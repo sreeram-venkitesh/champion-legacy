@@ -3,9 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Medicine Book</title>
+    <link rel="../css/book.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
+    <div class="row" style="height: 100%;">
+        <div class="col-sm" style="border-right:3px solid #333">
+            <div style="padding: 10px" >
+                <h2>Medicine List</h2>
+                <ul class="list-group" role="tablist">
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div style="padding: 10px;" >
+                <h2>Edit Details</h2>
+                <div class='container' style="border:1px solid #333;">
+                    <form id="medicineForm">
+                        <div>
+                            <br/>
+                            <label style='font-size:20px'>Enter Name</label>
+                            <input type='text' id='name' autofocus>
+                            <label style='font-size:20px'>Enter Manufacturer</label>
+                            <input type='text' id='manufacturer' autofocus>
+                            <label style='font-size:20px'>Enter Batch</label>
+                            <input type='text' id='batch'>
+                            <label style='font-size:20px'>Enter Packing</label>
+                            <input type='text' id='packing'>
+                            <label style='font-size:20px'>Enter Expiry</label>
+                            <br/>
+                            <br/>
+                            <input type='month' id='expiry'>
+                            <br/>
+                            <br/>
+                            <label style='font-size:20px'>Enter MRP</label>
+                            <input type='text' id='mrp' autofocus>
+                        </div>
+                        <br/>
+                        <button class='btn waves-effect waves-light' type="submit">Create!</button>
+                    </form>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+
+        const {app} = electron;
+
+        const model = require("../model.js");
+        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+
+        window.$ = window.jQuery = require('jquery')
+    
+        const ul = document.querySelector('ul');
+
+        const nameField = document.getElementById('name');
+        const manufacturerField = document.getElementById('manufacturer');
+        const batchField = document.getElementById('batch');
+        const packingField = document.getElementById('packing');
+        const expiryField = document.getElementById('expiry');
+        const mrpField = document.getElementById('mrp');
+
+
+        const form = document.querySelector('form');
+    
+        for(const i in medicineList){
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(medicineList[i].name);
+            //li.className= "list-group-item active"
+            li.className = "list-group-item list-group-item-action";
+            
+            li.append(itemText);
+            ul.append(li);
+        }
+        
+        $(window).ready(function() {
+            $(".list-group-item").on('click', function(){ 
+              $('.active').removeClass('active');
+              $(this).addClass('active');
+              var name = $(this).html(); 
+              console.log(name);
+              // Code here whatever you want or you can call other function here
+              for(const i in medicineList){
+                if(name==medicineList[i].name){
+                    nameField.value = medicineList[i].name;
+                    manufacturerField.value = medicineList[i].manufacturer;
+                    batchField.value = medicineList[i].batch;
+                    packingField.value = medicineList[i].packing;
+                    expiryField.value = medicineList[i].expiry;
+                    mrpField.value = medicineList[i].mrp;
+                }
+               }
+               
+            });
+          });
+
+
+        function submitForm(e){
+            e.preventDefault();
+            //console.log('event clicked');
+            {{/*  let keyValue = getFormFieldValues('doctorForm')
+            console.log('keyvalue last attempt')
+            console.log(keyValue)
+            
+            model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
+                console.log('Write kazjhinjuu')
+                });  */}}
+            console.log("Edit Njekki njekki!");
+        }
+
+        form.addEventListener("submit",submitForm);
+        
+        
+
+    </script>
     
 </body>
 </html>
