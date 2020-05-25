@@ -60,7 +60,7 @@
 
         const form = document.querySelector('form');
     
-        for(var i=0; i<1;i++){
+        for(const i in dealerList){
             const li = document.createElement('li');
             const itemText = document.createTextNode(dealerList[i].name);
             //li.className= "list-group-item active"
@@ -77,7 +77,7 @@
               var name = $(this).html(); 
               console.log(name);
               // Code here whatever you want or you can call other function here
-              for(var i=0;i<1;i++){
+              for(const i in dealerList){
                 if(name==dealerList[i].name){
                     nameField.value = dealerList[i].name;
                     addressField.value = dealerList[i].address;
