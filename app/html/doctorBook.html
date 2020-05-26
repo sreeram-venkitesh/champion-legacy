@@ -88,18 +88,29 @@
             });
           });
 
+        window.$ = window.jQuery = require('jquery')
+
+        const getFormFieldValues = function (formId) {
+            let keyValue = {columns: [], values: []}
+            $('#' + formId).find('input:visible, textarea:visible').each(function (idx, obj) {
+            keyValue.columns.push($(obj).attr('id'))
+            keyValue.values.push($(obj).val())
+            })
+            return keyValue
+        }
+
 
         function submitForm(e){
             e.preventDefault();
             //console.log('event clicked');
-            {{/*  let keyValue = getFormFieldValues('doctorForm')
-            console.log('keyvalue last attempt')
+            let keyValue = getFormFieldValues('doctorForm')
             console.log(keyValue)
             
+            console.log("Edit Njekki njekki!");
             model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
-                });  */}}
-            console.log("Edit Njekki njekki!");
+              });
+            location.reload();
         }
 
         form.addEventListener("submit",submitForm);

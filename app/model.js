@@ -333,6 +333,27 @@ module.exports.deleteMedicine = function (appPath, pid, callback) {
   }
 }
 
+module.exports.updateDoctors = function (appPath) {
+  let dbPath = path.join(appPath,'doctor.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `doctors` ORDER BY `name` ASC'
+    try {
+      let row = db.exec(query)
+      if (row !== undefined && row.length > 0) {
+        row = _rowsFromSqlDataObject(row[0])
+        // view.showPeople(row)
+        // console.log('going to print from inside fucntion')
+        // console.log(row)
+        return row
+      }
+    } catch (error) {
+      console.log('model.getDoctors', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
 /*
   Insert or update a person's data in the database.
 */
