@@ -190,6 +190,26 @@ function deleteMedicine(){
     deleteMedicineWindow.setMenuBarVisibility(false);
 }
 
+function newPurchaseBill(){
+    purchaseBillWindow = new BrowserWindow({
+        width:0,
+        height:0,
+        title:'New Purchase BIll',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    purchaseBillWindow.maximize();
+    purchaseBillWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/newPurchaseBill.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    purchaseBillWindow.on('close',function(){
+        deleteMedicineWindow=null;
+    });
+    purchaseBillWindow.setMenuBarVisibility(false);
+}
 
 const mainMenuTemplate = [
     {
@@ -294,7 +314,10 @@ const mainMenuTemplate = [
                 label:'Purchase',
                 submenu:[
                     {
-                        label:'New'
+                        label:'New',
+                        click(){
+                            newPurchaseBill();
+                        }
                     },
                     {
                         label:'Modify'

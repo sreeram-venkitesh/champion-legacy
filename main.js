@@ -17,6 +17,8 @@ app.setPath('userData',path.join(__dirname,"/database/"));
 app.on('ready', function(){
     //creating new window
     mainWindow = new BrowserWindow({
+        width:0,
+        height:0,
         webPreferences:{
             nodeIntegration:true
         }
