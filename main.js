@@ -3,27 +3,49 @@ const url = require('url');
 const path = require('path');
 
 //Classes
-const Doctor = require('./app/classes/doctor.js');
-const mainMenuTemplate =require('./mainMenuTemplate.js');
+const mainMenuTemplate =require('./app/menu/mainMenuTemplate.js');
 
 const{app, BrowserWindow, Menu, ipcMain} = electron;
+const model = require(path.join(__dirname, 'app', 'model.js'))
 
 let mainWindow;
 //let addWindow;
 
+app.setPath('userData',path.join(__dirname,"/database/"));
+
+
 app.on('ready', function(){
     //creating new window
     mainWindow = new BrowserWindow({
+        width:0,
+        height:0,
         webPreferences:{
             nodeIntegration:true
         }
     });
-    //Loading html file
+
+    model.initDb(app.getPath('userData'),'doctor.db',
+    // Load a DOM stub here. See renderer.js for the fully composed DOM.
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'mainWindow.html'),
+        pathname: path.join(__dirname,'app','html','mainWindow.html'),
         protocol: 'file:',
         slashes: true
-    }));
+    })));
+    console.log('Doctor Db init')
+    model.initDb(app.getPath('userData'),'dealer.db',() => {
+        console.log('Dealer Db init')
+    });
+    //console.log('Dealer Db init')
+    model.initDb(app.getPath('userData'),'medicine.db',() => {
+        console.log('Medicine Db init')
+    });
+    //console.log('Medicine Db init')
+    //Loading html file
+    // mainWindow.loadURL(url.format({
+    //     pathname: path.join(__dirname,'mainWindow.html'),
+    //     protocol: 'file:',
+    //     slashes: true
+    // }));
 
     mainWindow.maximize();
 
@@ -37,19 +59,3 @@ app.on('ready', function(){
 });
 
 
-if(process.env.NODE_ENV !== 'production'){
-    mainMenuTemplate.push({
-        label: 'Developer Tools',
-        submenu:[{
-            label:'Toggle Dev Tools',
-            accelerator:'Ctrl+I',
-            click(item,focusedWindow){
-                focusedWindow.toggleDevTools();
-            }
-        },
-        {
-            role:'reload'
-        }
-    ]
-    })
-}

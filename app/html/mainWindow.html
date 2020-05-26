@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Champion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+    <h1>Champion</h1>
+    <ul id='list'>
+
+    </ul>
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+
+        const {app} = electron;
+        //app.setPath('userData',);
+
+        {{/*  console.log('ivide ethy');  */}}
+        const model = require("../model.js");
+        const doctorList = model.getDoctors(path.join(__dirname,"../../database/"));
+        console.log(doctorList);
+        const dealerList = model.getDealers(path.join(__dirname,"../../database/"));
+        console.log(dealerList);
+        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+        console.log(medicineList);
+
+
+        const ul = document.querySelector('ul');
+        {{/*  const li = document.createElement('li');  */}}
+        
+        for(const i in doctorList){
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(doctorList[i].name);
+            li.append(itemText);
+            ul.append(li);
+        }
+        
+    </script>
+</body>
+</html>
