@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Purchase Bill</title>
+    <link rel="stylesheet" href="../css/bill.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier+New" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
-<body >
-    <div class='card mx-auto' style="width: 75%; height:100%; text-align:center; padding:20px;">
+<body style="background-color:whitesmoke;">
+    <div class='card mx-auto rounded' style="width: 75%; height:100%; text-align:center; margin:30px; padding:20px; box-shadow: 1em 0em 1em 0.5em #ccc">
 
         <div class='row'>
-            <div class="col" style="text-align: center;"> <h4>GST Invoice</h4></div>
+            <div class="col" style="text-align: center;"> <h4 style="font-weight:bold;">GST Invoice</h4></div>
         </div>
 
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
             <div class="col float-left">
-                <p class="float-left" style="margin-left: 50px; text-align:left">
+                <p class="float-left" style="margin-left: 50px; font-weight:bold; text-align:left; font-family:Courier New; font-size:22px;">
                     Champion Distributors<br/>
                     VIII/73, KALLUKKUDY,<br/>
                     KODANAD P.O,<br/>
@@ -28,7 +30,7 @@
             </div>
             
             <div class="col float-right" >
-                <p class="float-right" style="margin-right: 50px;">
+                <p class="float-right" style=" text-align:left; font-weight:bold; margin-right: 50px; font-family:Courier New; font-size:22px;">
                     GSTIN : 32BCCPR5741N12B<br/>
                     DL No1: KL-EKM-117304-20B<br/>
                     DL No2: KL-EKM-117305-21B
@@ -39,34 +41,46 @@
 
         <hr style="border-top: 2px dashed #999;">
         
-        <div class="row">
-            <div class="col float-left" style="margin-left: 50px;" >
-                <p style="text-align: left;">
-                    Customer : <br/>
-                    Address : <br/>
-                </p>
+        <div class='row'>
+            <div class="col" style="text-align: center;"> <p style="font-weight: bold; font-size: 20px;">DEBIT</p></div>
+        </div>
+        
+        <div class="row" style="margin-bottom:0px">
+            <div class="col float-left" style="margin-left: 50px; text-align:left;" >
+                <div class="row">
+                    <div class="col-1 float-left" style="text-align: left; width:fit-content">
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">Customer</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">Address</h5>
+                    </div>
+                    <div class="col float-left" style="margin-left: 70px;">
+                        <input type="text" placeholder="Customer" style="width: fit-content; "><br/>
+                        <input type="text" placeholder="Address" style="width: fit-content;" disabled>
+                    </div>
+                </div>
             </div>
                 
-            <div class="col float-center">
-                <p >
-                    DEBIT
-                </p>
-            </div>
-
-            <div class="col float-right">
-                <p style="text-align:left">
-                    INVOICE NO : <br/>
-                    DATE : <br/>
-                    PAGE NO : <br/>
-                </p>
+            <div class="col float-right" style="margin-left:50px;">
+                <div class="row" style="padding-left:25%">
+                    <div class="col-1 float-left" style="text-align: left; width:fit-content">
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">INVOICE</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">DATE</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">PAGE</h5>
+                    </div>
+                    <div class="col float-right" style="margin-left: 70px; text-align:left">
+                        <input type="text" placeholder="Invoice" style="width: fit-content; text-align:left "><br/>
+                        <input type="text" placeholder="Date" style="width: fit-content;" disabled><br/>
+                        <input type="text" placeholder="Page No." style="width: fit-content;" disabled>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
-        <div class="row" style="margin-bottom: 0px;">
+        <div class="row" style="margin-bottom: 10px; margin-top:0px">
             <div class="col" style="text-align: left; margin-left:50px">
-                <p>
+                <h4 style="font-weight:bold; font-family:Courier New;">
                     GST IN No : 32BCCPR5741N12B  DL No: KL-EKM-115546, KL-EKM-115546/2016
-                </p>
+                </h4>
             </div>
         </div>
 
@@ -74,97 +88,59 @@
 
         <div class="row">
 
-            <div class="col-1">
-                MFR
-            </div>
-            <div class="col-1">
-                NAME
-            </div>
-            <div class="col-1">
-                PACK
-            </div>
-            <div class="col-1">
-                HSN
-            </div>
-            <div class="col-1">
-                BATCH
-            </div>
-            <div class="col-1">
-                EXP
-            </div>
-            <div class="col-1">
-                QTY
-            </div>
-            <div class="col-1">
-                FREE
-            </div>
-            <div class="col-1">
-                RATE
-            </div>
-            <div class="col-1">
-                MRP
-            </div>
-            <div class="col-1">
-                CGST/SGST
-            </div>
-            <div class="col-1">
-                AMOUNT
-            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">MFR</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">PACK</th>
+                        <th scope="col">HSN</th>
+                        <th scope="col">BATCH</th>
+                        <th scope="col">EXP</th>
+                        <th scope="col">QTY</th>
+                        <th scope="col">FREE</th>
+                        <th scope="col">RATE</th>
+                        <th scope="col">MRP</th>
+                        <th scope="col">CGST</th>
+                        <th scope="col">SGST</th>
+                        <th scope="col">AMNT</th>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="bill-row-item">Medline</td>
+                            <td class="bill-row-item">Cosil</td>                            
+                            <td class="bill-row-item">10x20</td>
+                            <td class="bill-row-item">200</td>
+                            <td class="bill-row-item">202012</td>
+                            <td class="bill-row-item">05-2021</td>
+                            <td class="bill-row-item">10</td>
+                            <td class="bill-row-item">0</td>
+                            <td class="bill-row-item">100.00</td>
+                            <td class="bill-row-item">1000.00</td>
+                            <td class="bill-row-item">6.0</td>
+                            <td class="bill-row-item">6.0</td>
+                            <td class="bill-row-item">1000.00</td>
+
+                        </tr>
+                    </tbody>
+                </thead>
+            </table>
 
         </div>
 
-        <div class="row">
-
-            
-            <div class=' col-1 dropdown-menu'>
-                <a class="dropdown-menu-item"></a>
-            </div>
-            
-            <div class="col-1">
-                PACK
-            </div>
-            <div class="col-1">
-                HSN
-            </div>
-            <div class="col-1">
-                BATCH
-            </div>
-            <div class="col-1">
-                EXP
-            </div>
-            <div class="col-1">
-                QTY
-            </div>
-            <div class="col-1">
-                FREE
-            </div>
-            <div class="col-1">
-                RATE
-            </div>
-            <div class="col-1">
-                MRP
-            </div>
-            <div class="col-1">
-                CGST/SGST
-            </div>
-            <div class="col-1">
-                AMOUNT
-            </div>
-
-        </div>
-
+        
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
         <div class="row">
             <div class="col float-left" style="margin-left: 50px;" >
-                <p style="text-align: left;">
+                <p style="text-align: left; font-size:22px;">
                     TOTAL ITEMS : <br/>
                     TOTAL QTY : <br/>
                 </p>
             </div>
                 
-            <div class="col float-right" style="text-align: right;">
-                <p >
+            <div class="col float-right" style="text-align: left; margin-left:400px">
+                <p style="font-size:22px;">
                     CR/DR AMNT: 0.00<br/>
                     CR/DR Add<br/>
                     CHARGES   : 0.00<br/>
@@ -172,8 +148,8 @@
                 </p>
             </div>
 
-            <div class="col float-right">
-                <p style="text-align:left">
+            <div class="col float-right" style="text-align: left;">
+                <p style="text-align:left; font-size:22px">
                     SUB TOTAL : <br/>
                     TOTAL SGST : <br/>
                     TOTAL CGST : <br/>
@@ -187,13 +163,13 @@
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
             <div class="col float-left">
-                <p class="float-left" style="margin-left: 50px; text-align:left">
+                <p class="float-left" style="margin-left: 50px; text-align:left; font-size:22px;">
                     KF.CESS 1% : 36.10
                 </p>
             </div>
             
             <div class="col float-right" >
-                <p class="float-left" style="margin-right: 50px; text-align:left">
+                <p class="float-left" style="margin-right: 50px; text-align:left; font-weight:bold; font-size:22px;">
                     BILL AMOUNT : 
                 </p>
             </div>
@@ -202,7 +178,7 @@
 
         <div class="row">
             <div class="col float-left">
-                <p style="text-align: left; margin-left:50px">
+                <p style="text-align: left; margin-left:50px; font-weight:bold; font-family:Courier New; font-size:22px;">
                 Rs.
                 </p>
             </div>
@@ -213,15 +189,15 @@
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
             <div class="col float-left">
-                <p class="float-left" style="margin-left: 50px; text-align:left">
+                <p class="float-left" style="margin-left: 50px; text-align:left; font-size:22px;">
                     E & O E<br/>
                     Subject to PERUMBAVOOR Jurisdriction,<br/>
                     Software developed inhouse<br/>
                 </p>
             </div>
             
-            <div class="col float-right" >
-                <p class="float-right" style="margin-right: 50px; text-align:center;">
+            <div class="col float-right" style="text-align: center; font-size:22px;">
+                <p>
                     For CHAMPION DISTRIBUTORS<br/>
                     <br/>
                     Authorised Signatory
