@@ -87,7 +87,7 @@
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
         <div class="row">
-            <table class="table table-striped">
+            <table id="billTable" class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">MFR</th>
@@ -105,7 +105,7 @@
                         <th scope="col">AMNT</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableBody">
                     <tr>
                         <td scope="row" class="bill-row-item">Medline</td>
                         <td class="bill-row-item">Cosil</td>                            
@@ -128,26 +128,29 @@
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
         <div  class='row ' style=" margin-left:10px; margin-right:10px; border-top-left-radius: 10px; border-top-right-radius:10px; text-align: left; background-color:rgb(199, 193, 255); margin-bottom:0px; ">
-        <label style="text-align: left; margin:10px; margin-left:15px; color:black; font-size:larger; font-weight:bold;">
-            Add New Medicine to Bill
-        </label>
+            <div class="col">
+                <label style="text-align: left; margin-top:10px; margin-bottom:0px; margin-left:15px; color:black; font-size:larger; font-weight:bold;">
+                Add New Medicine to Bill
+                </label>
+                <div class="msg" style="margin-left: 15px"></div>
+            </div>  
         </div>
         
         <div class="row " style="margin-left:10px; margin-right:10px; padding-left:15px; padding-bottom:5px; border-bottom-left-radius: 10px; border-bottom-right-radius:10px;background-color:rgb(199, 193, 255);">
             <div class="col">
-                <input style="color:black;" placeholder="Enter Name">
+                <input id="nameField" style="color:black;" placeholder="Enter Name">
             </div>
             <div class="col">
-                <input placeholder="Enter Quantity">
+                <input id="qtyField" placeholder="Enter Quantity">
             </div>
             <div class="col">
-                <input placeholder="Enter Free Quantity">
+                <input id="freeField" placeholder="Enter Free Quantity">
             </div>
             <div class="col">
-                <input placeholder="Enter Rate">
+                <input id="rateField" placeholder="Enter Rate">
             </div>
             <div class="col">
-                <button class='btn waves-effect waves-light' style="background-color: blue; color:white; font-weight:bold;" type="submit">Add to Bill</button>
+                <button id="addButton" class='btn waves-effect waves-light' style="background-color: blue; color:white; font-weight:bold;" type="submit">Add to Bill</button>
             </div>
             
         </div>
@@ -240,7 +243,216 @@
         const model = require(path.join(__dirname,'../model.js'));
         window.$ = window.jQuery = require('jquery')
 
-        const form = document.querySelector('form');
+        //const form = document.querySelector('form');
+        const msg = document.querySelector('.msg');
+        const nameField = document.getElementById('nameField');
+        const qtyField = document.getElementById('qtyField');
+        const freeField = document.getElementById('freeField');
+        const rateField = document.getElementById('rateField');
+
+        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+
+        medicines = [];
+
+        for(const i in medicineList){
+            const itemText = medicineList[i].name;
+            medicines.push(itemText);
+            
+        }
+        console.log(medicines);
+
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function(e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+                }
+            }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        autocomplete(nameField, medicines);
+
+        const addToBillButton = document.getElementById('addButton');
+
+        addToBillButton.addEventListener('click',()=>{
+            console.log("Add button is clicked!");
+            if(nameField.value==='' || qtyField.value==='' || freeField.value==='' || rateField.value===''){
+                msg.innerHTML = 'Please enter a valid response';
+                setTimeout(() =>msg.innerHTML='',3000);
+            }else{
+                for(const i in medicineList){
+                    if(nameField.value===medicineList[i].name){
+                        var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+                        var newRow   = billTable.insertRow();
+                        
+                        
+                        var mfrCell  = newRow.insertCell(0);
+                        var mfrText  = document.createTextNode(medicineList[i].manufacturer);
+                        mfrCell.appendChild(mfrText);
+                        mfrCell.className = "bill-row-item";
+
+                        var nameCell  = newRow.insertCell(1);
+                        var nameText  = document.createTextNode(nameField.value);
+                        nameCell.appendChild(nameText);
+                        nameCell.className = "bill-row-item";
+                        //pack hsn batch exp qty free rate mrp cgst sgst amnt
+                        var packCell  = newRow.insertCell(2);
+                        var packText  = document.createTextNode(medicineList[i].packing);
+                        packCell.appendChild(packText);
+                        packCell.className = "bill-row-item";
+
+                        var hsnCell  = newRow.insertCell(3);
+                        //var hsnText  = document.createTextNode(medicineList[i].manufacturer);
+                        var hsnText  = document.createTextNode('HSN');
+                        hsnCell.appendChild(hsnText);
+                        hsnCell.className = "bill-row-item";
+                        
+                        var batchCell  = newRow.insertCell(4);
+                        var batchText  = document.createTextNode(medicineList[i].batch);
+                        batchCell.appendChild(batchText);
+                        batchCell.className = "bill-row-item";
+
+                        var expCell  = newRow.insertCell(5);
+                        var expText  = document.createTextNode(medicineList[i].expiry);
+                        expCell.appendChild(expText);
+                        expCell.className = "bill-row-item";
+
+                        var qtyCell  = newRow.insertCell(6);
+                        var qtyText  = document.createTextNode(qtyField.value);
+                        qtyCell.appendChild(qtyText);
+                        qtyCell.className = "bill-row-item";
+
+                        var freeCell  = newRow.insertCell(7);
+                        var freeText  = document.createTextNode(freeField.value);
+                        freeCell.appendChild(freeText);
+                        freeCell.className = "bill-row-item";
+
+                        var rateCell  = newRow.insertCell(8);
+                        var rateText  = document.createTextNode(rateField.value);
+                        rateCell.appendChild(rateText);
+                        rateCell.className = "bill-row-item";
+
+                        var mrpCell  = newRow.insertCell(9);
+                        var mrpText  = document.createTextNode(medicineList[i].mrp);
+                        mrpCell.appendChild(mrpText);
+                        mrpCell.className = "bill-row-item";
+
+                        var cgstCell  = newRow.insertCell(10);
+                        var cgstText  = document.createTextNode('6.0');
+                        cgstCell.appendChild(cgstText);
+                        cgstCell.className = "bill-row-item";
+
+                        var sgstCell  = newRow.insertCell(11);
+                        var sgstText  = document.createTextNode('6.0');
+                        sgstCell.appendChild(sgstText);
+                        sgstCell.className = "bill-row-item";
+
+                        var quantity = parseInt(qtyField.value);
+                        var rate = parseFloat(rateField.value);
+
+                        var amount = quantity * rate;
+
+                        var amountCell  = newRow.insertCell(12);
+                        var amountText  = document.createTextNode(amount);
+                        amountCell.appendChild(amountText);
+                        amountCell.className = "bill-row-item";
+
+                        
+
+                        
+
+                    }
+                }
+            }
+        });
 
         function submitForm(e){
             e.preventDefault();
@@ -253,9 +465,16 @@
             model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
               });  */}}
+
+            
+            
+          
+
+
+            
         }
 
-        form.addEventListener("submit",submitForm);
+        //form.addEventListener("submit",submitForm);
     </script>
 </body>
 </html>
