@@ -87,7 +87,6 @@
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
         <div class="row">
-
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -105,27 +104,52 @@
                         <th scope="col">SGST</th>
                         <th scope="col">AMNT</th>
                     </tr>
-                    <tbody>
-                        <tr>
-                            <td scope="row" class="bill-row-item">Medline</td>
-                            <td class="bill-row-item">Cosil</td>                            
-                            <td class="bill-row-item">10x20</td>
-                            <td class="bill-row-item">200</td>
-                            <td class="bill-row-item">202012</td>
-                            <td class="bill-row-item">05-2021</td>
-                            <td class="bill-row-item">10</td>
-                            <td class="bill-row-item">0</td>
-                            <td class="bill-row-item">100.00</td>
-                            <td class="bill-row-item">1000.00</td>
-                            <td class="bill-row-item">6.0</td>
-                            <td class="bill-row-item">6.0</td>
-                            <td class="bill-row-item">1000.00</td>
-
-                        </tr>
-                    </tbody>
                 </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row" class="bill-row-item">Medline</td>
+                        <td class="bill-row-item">Cosil</td>                            
+                        <td class="bill-row-item">10x20</td>
+                        <td class="bill-row-item">200</td>
+                        <td class="bill-row-item">202012</td>
+                        <td class="bill-row-item">05-2021</td>
+                        <td class="bill-row-item">10</td>
+                        <td class="bill-row-item">0</td>
+                        <td class="bill-row-item">100.00</td>
+                        <td class="bill-row-item">1000.00</td>
+                        <td class="bill-row-item">6.0</td>
+                        <td class="bill-row-item">6.0</td>
+                        <td class="bill-row-item">1000.00</td>
+                    </tr>
+                </tbody>   
             </table>
+        </div>
 
+        <hr style="border-top: 2px dashed #999; margin-top:0;">
+
+        <div  class='row ' style=" margin-left:10px; margin-right:10px; border-top-left-radius: 10px; border-top-right-radius:10px; text-align: left; background-color:rgb(199, 193, 255); margin-bottom:0px; ">
+        <label style="text-align: left; margin:10px; margin-left:15px; color:black; font-size:larger; font-weight:bold;">
+            Add New Medicine to Bill
+        </label>
+        </div>
+        
+        <div class="row " style="margin-left:10px; margin-right:10px; padding-left:15px; padding-bottom:5px; border-bottom-left-radius: 10px; border-bottom-right-radius:10px;background-color:rgb(199, 193, 255);">
+            <div class="col">
+                <input style="color:black;" placeholder="Enter Name">
+            </div>
+            <div class="col">
+                <input placeholder="Enter Quantity">
+            </div>
+            <div class="col">
+                <input placeholder="Enter Free Quantity">
+            </div>
+            <div class="col">
+                <input placeholder="Enter Rate">
+            </div>
+            <div class="col">
+                <button class='btn waves-effect waves-light' style="background-color: blue; color:white; font-weight:bold;" type="submit">Add to Bill</button>
+            </div>
+            
         </div>
 
         
@@ -208,5 +232,30 @@
 
 
     </div>
+
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+        const {app} = electron;
+        const model = require(path.join(__dirname,'../model.js'));
+        window.$ = window.jQuery = require('jquery')
+
+        const form = document.querySelector('form');
+
+        function submitForm(e){
+            e.preventDefault();
+            //console.log('event clicked');
+            //TODO for bill data into bill row db and bill db later on in the game
+            {{/*  let keyValue = getFormFieldValues('doctorForm')
+            console.log('keyvalue last attempt')
+            console.log(keyValue)
+            
+            model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
+                console.log('Write kazjhinjuu')
+              });  */}}
+        }
+
+        form.addEventListener("submit",submitForm);
+    </script>
 </body>
 </html>
