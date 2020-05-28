@@ -8,7 +8,7 @@ function addDoctor(){
     //Creating new window with custom dimensions
     addDoctorWindow = new BrowserWindow({
         width: 500,
-        height: 335,
+        height: 340,
         title:'Add New Doctor',
         webPreferences:{
             nodeIntegration:true
@@ -30,7 +30,7 @@ function addDealer(){
     //Creating new window with custom dimensions
     addDealerWindow = new BrowserWindow({
         width: 500,
-        height: 330,
+        height: 340,
         title:'Add New Dealer',
         webPreferences:{
             nodeIntegration:true
@@ -52,7 +52,7 @@ function addMedicine(){
     //Creating new window with custom dimensions
     addMedicineWindow = new BrowserWindow({
         width: 500,
-        height: 600,
+        height: 750,
         title:'Add New Medicine',
         webPreferences:{
             nodeIntegration:true
@@ -113,7 +113,7 @@ function modifyDealer(){
 function modifyMedicine(){
     modifyMedicineWindow = new BrowserWindow({
         width:1000,
-        height:850,
+        height:970,
         title:'Medicine Book',
         webPreferences:{
             nodeIntegration:true

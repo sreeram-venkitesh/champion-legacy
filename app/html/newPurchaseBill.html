@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Purchase Bill</title>
+    <link rel="stylesheet" href="../css/bill.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier+New" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
-<body >
-    <div class='card mx-auto' style="width: 75%; height:100%; text-align:center; padding:20px;">
+<body style="background-color:whitesmoke;">
+    <div class='card mx-auto rounded' style="width: 75%; height:100%; text-align:center; margin:30px; padding:20px; box-shadow: 1em 0em 1em 0.5em #ccc">
 
         <div class='row'>
-            <div class="col" style="text-align: center;"> <h4>GST Invoice</h4></div>
+            <div class="col" style="text-align: center;"> <h4 style="font-weight:bold;">GST Invoice</h4></div>
         </div>
 
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
             <div class="col float-left">
-                <p class="float-left" style="margin-left: 50px; text-align:left">
+                <p class="float-left" style="margin-left: 50px; font-weight:bold; text-align:left; font-family:Courier New; font-size:22px;">
                     Champion Distributors<br/>
                     VIII/73, KALLUKKUDY,<br/>
                     KODANAD P.O,<br/>
@@ -28,7 +30,7 @@
             </div>
             
             <div class="col float-right" >
-                <p class="float-right" style="margin-right: 50px;">
+                <p class="float-right" style=" text-align:left; font-weight:bold; margin-right: 50px; font-family:Courier New; font-size:22px;">
                     GSTIN : 32BCCPR5741N12B<br/>
                     DL No1: KL-EKM-117304-20B<br/>
                     DL No2: KL-EKM-117305-21B
@@ -39,147 +41,144 @@
 
         <hr style="border-top: 2px dashed #999;">
         
-        <div class="row">
-            <div class="col float-left" style="margin-left: 50px;" >
-                <p style="text-align: left;">
-                    Customer : <br/>
-                    Address : <br/>
-                </p>
+        <div class='row'>
+            <div class="col" style="text-align: center;"> <p style="font-weight: bold; font-size: 20px;">CREDIT</p></div>
+        </div>
+        
+        <div class="row" style="margin-bottom:0px">
+            <div class="col float-left" style="margin-left: 50px; text-align:left;" >
+                <div class="row">
+                    <div class="col-1 float-left" style="text-align: left; width:fit-content">
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">Doctor</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">Address</h5>
+                    </div>
+                    <div class="col float-left" style="margin-left: 70px;">
+                        <input id="doctorAutocomplete" type="text" placeholder="Doctor" style="margin-bottom:3px; width:fit-content;"><br/>
+                        <h5 id="doctorAddress" style="margin-top: 15px; margin-right:0px; width:fit-content">Address</h5>
+                    </div>
+                </div>
             </div>
                 
-            <div class="col float-center">
-                <p >
-                    DEBIT
-                </p>
-            </div>
-
-            <div class="col float-right">
-                <p style="text-align:left">
-                    INVOICE NO : <br/>
-                    DATE : <br/>
-                    PAGE NO : <br/>
-                </p>
+            <div class="col float-right" style="margin-left:50px;">
+                <div class="row" style="padding-left:25%">
+                    <div class="col-1 float-left" style="text-align: left; width:fit-content">
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">INVOICE</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">DATE</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">PAGE</h5>
+                    </div>
+                    <div class="col float-right" style="margin-left: 70px; text-align:left">
+                        <input type="text" placeholder="Invoice" style="width: fit-content; text-align:left; margin-bottom:0px;"><br/>
+                        <h5 id="dateField" style="margin-top: 15px; margin-right:0px; width:fit-content"></h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">1</h5>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
-        <div class="row" style="margin-bottom: 0px;">
+        <div class="row" style="margin-bottom: 10px; margin-top:0px">
             <div class="col" style="text-align: left; margin-left:50px">
-                <p>
+                <h4 style="font-weight:bold; font-family:Courier New;">
                     GST IN No : 32BCCPR5741N12B  DL No: KL-EKM-115546, KL-EKM-115546/2016
-                </p>
+                </h4>
             </div>
         </div>
 
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
         <div class="row">
-
-            <div class="col-1">
-                MFR
-            </div>
-            <div class="col-1">
-                NAME
-            </div>
-            <div class="col-1">
-                PACK
-            </div>
-            <div class="col-1">
-                HSN
-            </div>
-            <div class="col-1">
-                BATCH
-            </div>
-            <div class="col-1">
-                EXP
-            </div>
-            <div class="col-1">
-                QTY
-            </div>
-            <div class="col-1">
-                FREE
-            </div>
-            <div class="col-1">
-                RATE
-            </div>
-            <div class="col-1">
-                MRP
-            </div>
-            <div class="col-1">
-                CGST/SGST
-            </div>
-            <div class="col-1">
-                AMOUNT
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            
-            <div class=' col-1 dropdown-menu'>
-                <a class="dropdown-menu-item"></a>
-            </div>
-            
-            <div class="col-1">
-                PACK
-            </div>
-            <div class="col-1">
-                HSN
-            </div>
-            <div class="col-1">
-                BATCH
-            </div>
-            <div class="col-1">
-                EXP
-            </div>
-            <div class="col-1">
-                QTY
-            </div>
-            <div class="col-1">
-                FREE
-            </div>
-            <div class="col-1">
-                RATE
-            </div>
-            <div class="col-1">
-                MRP
-            </div>
-            <div class="col-1">
-                CGST/SGST
-            </div>
-            <div class="col-1">
-                AMOUNT
-            </div>
-
+            <table id="billTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">MFR</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">PACK</th>
+                        <th scope="col">HSN</th>
+                        <th scope="col">BATCH</th>
+                        <th scope="col">EXP</th>
+                        <th scope="col">QTY</th>
+                        <th scope="col">FREE</th>
+                        <th scope="col">RATE</th>
+                        <th scope="col">MRP</th>
+                        <th scope="col">CGST</th>
+                        <th scope="col">SGST</th>
+                        <th scope="col">AMNT</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    
+                </tbody>   
+            </table>
         </div>
 
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
-        <div class="row">
+        <div  class='row ' style=" margin-left:10px; margin-right:10px; border-top-left-radius: 10px; border-top-right-radius:10px; text-align: left; background-color:rgb(199, 193, 255); margin-bottom:0px; ">
+            <div class="col">
+                <label style="text-align: left; margin-top:10px; margin-bottom:0px; margin-left:15px; color:black; font-size:larger; font-weight:bold;">
+                Add New Medicine to Bill
+                </label>
+                <div class="msg" style="margin-left: 15px"></div>
+            </div>  
+        </div>
+        
+        <div class="row " style="margin-left:10px; margin-right:10px; padding-left:15px; padding-bottom:5px; border-bottom-left-radius: 10px; border-bottom-right-radius:10px;background-color:rgb(199, 193, 255);">
+            <div class="col">
+                <input id="nameField" style="color:black;" placeholder="Enter Name">
+            </div>
+            <div class="col">
+                <input id="qtyField" placeholder="Enter Quantity">
+            </div>
+            <div class="col">
+                <input id="freeField" placeholder="Enter Free Quantity">
+            </div>
+            <div class="col">
+                <input id="rateField" placeholder="Enter Rate">
+            </div>
+            <div class="col">
+                <button id="addButton" class='btn waves-effect waves-light' style="background-color: blue; color:white; font-weight:bold;" type="submit">Add to Bill</button>
+            </div>
+            
+        </div>
+
+        
+        <hr style="border-top: 2px dashed #999; margin-top:0;">
+
+        <div class="row" style="margin-bottom: 0;">
             <div class="col float-left" style="margin-left: 50px;" >
-                <p style="text-align: left;">
+                <p id="itemsAndQty" style="text-align: left; font-size:22px;">
                     TOTAL ITEMS : <br/>
                     TOTAL QTY : <br/>
                 </p>
             </div>
                 
-            <div class="col float-right" style="text-align: right;">
-                <p >
+            <div class="col float-right" style="text-align: left; margin-left:400px">
+                <p style="font-size:22px; margin-bottom:0px;">
                     CR/DR AMNT: 0.00<br/>
                     CR/DR Add<br/>
-                    CHARGES   : 0.00<br/>
-                    DISCOUNT  : 0.00
+                    CHARGES   : 0.00 
                 </p>
+                <div>
+                    <p class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;"> DISCOUNT :</p>
+                    <input id="discountInput" type="float" placeholder="0" style="margin-left:10px; width:100px;">
+                </div>
             </div>
 
-            <div class="col float-right">
-                <p style="text-align:left">
+            <div class="col float-right" style="text-align: left;">
+                <p id="totals" style="text-align:left; margin-bottom:0px; font-size:22px">
                     SUB TOTAL : <br/>
                     TOTAL SGST : <br/>
-                    TOTAL CGST : <br/>
-                    ROUND OFF :
+                    TOTAL CGST : 
                 </p>
+                <div>
+                    <p class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;">ROUND OFF :</p>
+                    <input id="roundOffInput" type="float" placeholder="0" style="margin-left:10px; width:100px;">
+                </div>
             </div>
+        </div>
+
+        <div class="row">
+            <button id="updatePriceButton" class='btn waves-effect waves-light ml-auto' style="background-color: rgb(141, 141, 226); color:white; font-weight:bold; margin-right:55px;" type="submit">Add Discount and Roundoff</button>
         </div>
 
         <hr style="border-top: 2px dashed #999; margin-top:0;">
@@ -187,14 +186,17 @@
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
             <div class="col float-left">
-                <p class="float-left" style="margin-left: 50px; text-align:left">
-                    KF.CESS 1% : 36.10
+                <p id="kfcess" class="float-left" style="margin-left: 50px; text-align:left; font-size:22px;">
+                    KF.CESS 1% : 
                 </p>
             </div>
             
             <div class="col float-right" >
-                <p class="float-left" style="margin-right: 50px; text-align:left">
+                <p class="float-left" style="width:fit-content; margin-right: 25px; text-align:left; font-weight:bold; font-size:22px;">
                     BILL AMOUNT : 
+                </p>
+                <p id="finalAmount" class="float-left" style="margin-left:0px; font-weight:bold; font-size:22px;">
+                    0.00
                 </p>
             </div>
            
@@ -202,7 +204,7 @@
 
         <div class="row">
             <div class="col float-left">
-                <p style="text-align: left; margin-left:50px">
+                <p id="finalAmountInWords" style="text-align: left; margin-left:50px; font-weight:bold; font-family:Courier New; font-size:22px;">
                 Rs.
                 </p>
             </div>
@@ -213,17 +215,17 @@
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
             <div class="col float-left">
-                <p class="float-left" style="margin-left: 50px; text-align:left">
+                <p class="float-left" style="margin-left: 50px; text-align:left; font-size:22px;">
                     E & O E<br/>
                     Subject to PERUMBAVOOR Jurisdriction,<br/>
-                    Software developed inhouse<br/>
+                    Software: https://github.com/fillerink/champion<br/>
                 </p>
             </div>
             
-            <div class="col float-right" >
-                <p class="float-right" style="margin-right: 50px; text-align:center;">
+            <div class="col float-right" style="text-align: center; font-size:22px;">
+                <p>
                     For CHAMPION DISTRIBUTORS<br/>
-                    <br/>
+                     <br/>
                     Authorised Signatory
                 </p>
             </div>
@@ -232,5 +234,356 @@
 
 
     </div>
+
+    <script>
+        const path = require('path');
+        const electron = require('electron');
+        const {app} = electron;
+        const model = require(path.join(__dirname,'../model.js'));
+        window.$ = window.jQuery = require('jquery')
+
+        //const form = document.querySelector('form');
+        const msg = document.querySelector('.msg');
+        const nameField = document.getElementById('nameField');
+        const qtyField = document.getElementById('qtyField');
+        const freeField = document.getElementById('freeField');
+        const rateField = document.getElementById('rateField');
+
+        const roundOffField = document.getElementById('roundOffInput');
+        const discountField = document.getElementById('discountInput');
+
+        const customerNameField = document.getElementById('doctorAutocomplete');
+
+        const dateField = document.getElementById('dateField');
+
+        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+        const doctorList = model.getDoctors(path.join(__dirname,"../../database/"));
+        medicines = [];
+        doctors= [];
+        doctorAddresses = [];
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '-' + mm + '-' + yyyy;
+        dateField.innerHTML = today;
+
+        for(const i in medicineList){
+            medicines.push(medicineList[i].name);
+        }
+        for (const l in doctorList){
+            doctors.push(doctorList[l].name);
+            doctorAddresses.push(doctorList[l].address);
+        }
+        console.log(doctorAddresses);
+        console.log(medicines);
+
+        function autocomplete(inp, arr, address) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function(e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        if(address!=undefined){
+                            addressField = document.getElementById('doctorAddress');
+                            for (doctor in doctorList){
+                                if(inp.value===doctorList[doctor].name){
+                                    addressField.innerHTML = address[doctor];
+                                }
+                            }
+                        }
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                    }
+                }
+                
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                    }
+                }
+                
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+                }
+            }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        autocomplete(customerNameField,doctors,doctorAddresses);
+        autocomplete(nameField, medicines);
+
+        var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+        var b = ['', '', 'Twenty','Thirty','Forty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
+
+        function inWords (num) {
+            if ((num = num.toString()).length > 9) return 'overflow';
+            n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+            if (!n) return; var str = '';
+            str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : '';
+            str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
+            str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
+            str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+            str += 'Only'; 
+            return str;
+        }
+
+        const addToBillButton = document.getElementById('addButton');
+
+        addToBillButton.addEventListener('click',()=>{
+            console.log("Add button is clicked!");
+            if(nameField.value==='' || qtyField.value==='' || freeField.value==='' || rateField.value===''){
+                msg.innerHTML = 'Please enter a valid response';
+                setTimeout(() =>msg.innerHTML='',3000);
+            }else{
+                for(const i in medicineList){
+                    if(nameField.value===medicineList[i].name){
+                        if( (parseInt(qtyField.value)+parseInt(freeField.value)) > parseInt(medicineList[i].stock) ) {
+                            msg.innerHTML = `Enter a quantity avaliable within stock. Current stock = ${medicineList[i].stock}. You entered ${qtyField.value} + ${freeField.value} = ${parseInt(qtyField.value)+parseInt(freeField.value)}`;
+                            setTimeout(() =>msg.innerHTML='',10000);
+                        }else{
+                        
+                            var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+                            var newRow   = billTable.insertRow();
+
+                            var mfrCell  = newRow.insertCell(0);
+                            var mfrText  = document.createTextNode(medicineList[i].manufacturer);
+                            mfrCell.appendChild(mfrText);
+                            mfrCell.className = "bill-row-item";
+
+                            var nameCell  = newRow.insertCell(1);
+                            var nameText  = document.createTextNode(nameField.value);
+                            nameCell.appendChild(nameText);
+                            nameCell.className = "bill-row-item";
+                            //pack hsn batch exp qty free rate mrp cgst sgst amnt
+                            var packCell  = newRow.insertCell(2);
+                            var packText  = document.createTextNode(medicineList[i].packing);
+                            packCell.appendChild(packText);
+                            packCell.className = "bill-row-item";
+
+                            var hsnCell  = newRow.insertCell(3);
+                            //var hsnText  = document.createTextNode(medicineList[i].manufacturer);
+                            var hsnText  = document.createTextNode(medicineList[i].hsn);
+                            hsnCell.appendChild(hsnText);
+                            hsnCell.className = "bill-row-item";
+                            
+                            var batchCell  = newRow.insertCell(4);
+                            var batchText  = document.createTextNode(medicineList[i].batch);
+                            batchCell.appendChild(batchText);
+                            batchCell.className = "bill-row-item";
+
+                            var expCell  = newRow.insertCell(5);
+                            var expText  = document.createTextNode(medicineList[i].expiry);
+                            expCell.appendChild(expText);
+                            expCell.className = "bill-row-item";
+
+                            var qtyCell  = newRow.insertCell(6);
+                            var qtyText  = document.createTextNode(qtyField.value);
+                            qtyCell.appendChild(qtyText);
+                            qtyCell.className = "bill-row-item";
+
+                            var freeCell  = newRow.insertCell(7);
+                            var freeText  = document.createTextNode(freeField.value);
+                            freeCell.appendChild(freeText);
+                            freeCell.className = "bill-row-item";
+
+                            var rateCell  = newRow.insertCell(8);
+                            var rateText  = document.createTextNode(rateField.value);
+                            rateCell.appendChild(rateText);
+                            rateCell.className = "bill-row-item";
+
+                            var mrpCell  = newRow.insertCell(9);
+                            var mrpText  = document.createTextNode(medicineList[i].mrp);
+                            mrpCell.appendChild(mrpText);
+                            mrpCell.className = "bill-row-item";
+
+                            var cgstCell  = newRow.insertCell(10);
+                            var cgstText  = document.createTextNode('6.0');
+                            cgstCell.appendChild(cgstText);
+                            cgstCell.className = "bill-row-item";
+
+                            var sgstCell  = newRow.insertCell(11);
+                            var sgstText  = document.createTextNode('6.0');
+                            sgstCell.appendChild(sgstText);
+                            sgstCell.className = "bill-row-item";
+
+                            var quantity = parseInt(qtyField.value);
+                            var rate = parseFloat(rateField.value);
+
+                            var amount = quantity * rate;
+
+                            var amountCell  = newRow.insertCell(12);
+                            var amountText  = document.createTextNode(amount);
+                            amountCell.appendChild(amountText);
+                            amountCell.className = "bill-row-item";
+
+                            const rowNumber = billTable.rows.length;
+
+                            var totalQty = 0;
+                            var totalCgst = 0;
+                            var totalSgst = 0;
+                            var subTotal = 0;
+
+                            for (var k=0; k<billTable.rows.length; k++ ){
+                                totalQty += parseInt(billTable.rows[k].cells[6].innerHTML);
+                                subTotal += parseFloat(billTable.rows[k].cells[12].innerHTML);
+                                totalCgst += ((parseFloat(billTable.rows[k].cells[12].innerHTML) * 6)/100)
+                                totalSgst += ((parseFloat(billTable.rows[k].cells[12].innerHTML) * 6)/100)
+
+                            }
+
+                            
+
+                            var kfcess = (subTotal * 0.0100);
+                            document.getElementById('itemsAndQty').innerHTML = `TOTAL ITEMS : ${rowNumber}<br/>
+                            TOTAL QTY : ${totalQty}<br/>`;
+                            document.getElementById('totals').innerHTML = `SUB TOTAL : ${subTotal} <br/>
+                            TOTAL SGST : ${totalSgst}<br/>
+                            TOTAL CGST : ${totalCgst}`;
+                            document.getElementById('kfcess').innerHTML =  `KF.CESS 1% : ${kfcess} `;
+
+                            var billAmount = subTotal + totalSgst + totalCgst + kfcess;
+                            document.getElementById('finalAmount').innerHTML = billAmount;
+                            var inwords = inWords(parseInt(billAmount));
+                            document.getElementById('finalAmountInWords').innerHTML = `Rs. ${inwords}`;
+                        }
+                    }else{
+                        msg.innerHTML = 'Please select a valid medicine name';
+                        setTimeout(() =>msg.innerHTML='',3000);
+                    }
+                }
+            }
+        });
+
+        const updatePriceButton = document.getElementById('updatePriceButton');
+
+        updatePriceButton.addEventListener('click',()=>{
+            console.log("update njekki");
+            var discount = parseFloat(discountField.value);
+            var roundoff = parseFloat(roundOffField.value);
+            console.log(`Discount is ${discount}`);
+            console.log(`Roundoff is ${roundoff}`);
+            console.log('After processing');
+            if(isNaN(discount)){
+                discount = 0.0;
+            }
+            if(isNaN(roundoff)){
+                roundoff = 0.0;
+            }
+            console.log(`Discount is ${discount}`);
+            console.log(`Roundoff is ${roundoff}`);
+            if(discount!=NaN && roundoff!=NaN){
+                var finalBillAmount = document.getElementById('finalAmount').innerHTML;
+
+               
+                console.log(finalBillAmount);            
+                var finalAmount = parseFloat(finalBillAmount);
+                console.log(finalAmount);
+                finalAmount -= discount;
+                finalAmount += roundoff;
+                document.getElementById('finalAmount').innerHTML = finalAmount;
+                var inwords = inWords(parseInt(finalAmount));
+                document.getElementById('finalAmountInWords').innerHTML = `Rs. ${inwords}`;
+            }
+
+            
+
+        })
+
+        function submitForm(e){
+            e.preventDefault();
+            //console.log('event clicked');
+            //TODO for bill data into bill row db and bill db later on in the game
+            {{/*  let keyValue = getFormFieldValues('doctorForm')
+            console.log('keyvalue last attempt')
+            console.log(keyValue)
+            
+            model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
+                console.log('Write kazjhinjuu')
+              });  */}}
+            
+        }
+
+        //form.addEventListener("submit",submitForm);
+    </script>
 </body>
 </html>

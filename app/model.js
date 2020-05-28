@@ -88,8 +88,7 @@ module.exports.initDb = function (appPath, whichDb, callback) {
       case path.join(appPath, 'medicine.db'):
         query = fs.readFileSync(path.join(__dirname, 'db', 'medicineSchema.sql'), 'utf8')
         break;
-    }
-    
+    };
     let result = db.exec(query)
     if (Object.keys(result).length === 0 &&
       typeof result.constructor === 'function' &&
