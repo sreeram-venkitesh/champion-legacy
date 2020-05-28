@@ -29,6 +29,8 @@
                             <input type='text' id='name' autofocus>
                             <label style='font-size:20px'>Enter Manufacturer</label>
                             <input type='text' id='manufacturer' autofocus>
+                            <label style='font-size:20px'>Enter HSN Code</label>
+                            <input type='text' id='hsn' autofocus>
                             <label style='font-size:20px'>Enter Batch</label>
                             <input type='text' id='batch'>
                             <label style='font-size:20px'>Enter Packing</label>
@@ -41,6 +43,8 @@
                             <br/>
                             <label style='font-size:20px'>Enter MRP</label>
                             <input type='text' id='mrp' autofocus>
+                            <label style='font-size:20px'>Enter Current Stock</label>
+                            <input type='text' id='stock' autofocus disabled>
                         </div>
                         <br/>
                         <button class='btn waves-effect waves-light' type="submit">Create!</button>
@@ -66,10 +70,12 @@
 
         const nameField = document.getElementById('name');
         const manufacturerField = document.getElementById('manufacturer');
+        const hsnField = document.getElementById('hsn');
         const batchField = document.getElementById('batch');
         const packingField = document.getElementById('packing');
         const expiryField = document.getElementById('expiry');
         const mrpField = document.getElementById('mrp');
+        const stockField = document.getElementById('stock');
 
 
         const form = document.querySelector('form');
@@ -95,10 +101,12 @@
                 if(name==medicineList[i].name){
                     nameField.value = medicineList[i].name;
                     manufacturerField.value = medicineList[i].manufacturer;
+                    hsnField.value = medicineList[i].hsn;
                     batchField.value = medicineList[i].batch;
                     packingField.value = medicineList[i].packing;
                     expiryField.value = medicineList[i].expiry;
                     mrpField.value = medicineList[i].mrp;
+                    stockField.value = medicineList[i].stock;
                 }
                }
                
