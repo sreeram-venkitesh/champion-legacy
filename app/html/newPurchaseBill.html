@@ -42,19 +42,19 @@
         <hr style="border-top: 2px dashed #999;">
         
         <div class='row'>
-            <div class="col" style="text-align: center;"> <p style="font-weight: bold; font-size: 20px;">DEBIT</p></div>
+            <div class="col" style="text-align: center;"> <p style="font-weight: bold; font-size: 20px;">CREDIT</p></div>
         </div>
         
         <div class="row" style="margin-bottom:0px">
             <div class="col float-left" style="margin-left: 50px; text-align:left;" >
                 <div class="row">
                     <div class="col-1 float-left" style="text-align: left; width:fit-content">
-                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">Dealer</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">Doctor</h5>
                         <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">Address</h5>
                     </div>
                     <div class="col float-left" style="margin-left: 70px;">
-                        <input type="text" placeholder="Dealer" style="width: fit-content; "><br/>
-                        <input type="text" placeholder="Address" style="width: fit-content;" disabled>
+                        <input id="doctorAutocomplete" type="text" placeholder="Doctor" style="margin-bottom:3px; width: fit-content; "><br/>
+                        <h5 id="doctorAddress" style="margin-top: 15px; margin-right:0px; width:fit-content">Address</h5>
                     </div>
                 </div>
             </div>
@@ -67,9 +67,9 @@
                         <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">PAGE</h5>
                     </div>
                     <div class="col float-right" style="margin-left: 70px; text-align:left">
-                        <input type="text" placeholder="Invoice" style="width: fit-content; text-align:left "><br/>
-                        <input type="text" placeholder="Date" style="width: fit-content;" disabled><br/>
-                        <input type="text" placeholder="Page No." style="width: fit-content;" disabled>
+                        <input type="text" placeholder="Invoice" style="width: fit-content; text-align:left; margin-bottom:0px;"><br/>
+                        <h5 id="dateField" style="margin-top: 10px; margin-right:0px; width:fit-content"></h5>
+                        <h5 style="margin-top: 18px; margin-right:0px; width:fit-content">1</h5>
                     </div>
                 </div>
                 
@@ -250,18 +250,35 @@
         const freeField = document.getElementById('freeField');
         const rateField = document.getElementById('rateField');
 
-        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+        const customerNameField = document.getElementById('doctorAutocomplete');
 
+        const dateField = document.getElementById('dateField');
+
+        const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+        const doctorList = model.getDoctors(path.join(__dirname,"../../database/"));
         medicines = [];
+        doctors= [];
+        doctorAddresses = [];
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '-' + mm + '-' + yyyy;
+        dateField.innerHTML = today;
 
         for(const i in medicineList){
-            const itemText = medicineList[i].name;
-            medicines.push(itemText);
-            
+            medicines.push(medicineList[i].name);
         }
+        for (const l in doctorList){
+            doctors.push(doctorList[l].name);
+            doctorAddresses.push(doctorList[l].address);
+        }
+        console.log(doctorAddresses);
         console.log(medicines);
 
-        function autocomplete(inp, arr) {
+        function autocomplete(inp, arr, address) {
             /*the autocomplete function takes two arguments,
             the text field element and an array of possible autocompleted values:*/
             var currentFocus;
@@ -293,6 +310,14 @@
                         b.addEventListener("click", function(e) {
                         /*insert the value for the autocomplete text field:*/
                         inp.value = this.getElementsByTagName("input")[0].value;
+                        if(address!=undefined){
+                            addressField = document.getElementById('doctorAddress');
+                            for (doctor in doctorList){
+                                if(inp.value===doctorList[doctor].name){
+                                    addressField.innerHTML = address[doctor];
+                                }
+                            }
+                        }
                         /*close the list of autocompleted values,
                         (or any other open lists of autocompleted values:*/
                         closeAllLists();
@@ -300,6 +325,7 @@
                     a.appendChild(b);
                     }
                 }
+                
             });
             /*execute a function presses a key on the keyboard:*/
             inp.addEventListener("keydown", function(e) {
@@ -325,6 +351,7 @@
                     if (x) x[currentFocus].click();
                     }
                 }
+                
             });
             function addActive(x) {
                 /*a function to classify an item as "active":*/
@@ -345,6 +372,7 @@
             function closeAllLists(elmnt) {
                 /*close all autocomplete lists in the document,
                 except the one passed as an argument:*/
+                
                 var x = document.getElementsByClassName("autocomplete-items");
                 for (var i = 0; i < x.length; i++) {
                 if (elmnt != x[i] && elmnt != inp) {
@@ -358,6 +386,7 @@
             });
         }
 
+        autocomplete(customerNameField,doctors,doctorAddresses);
         autocomplete(nameField, medicines);
 
         const addToBillButton = document.getElementById('addButton');
