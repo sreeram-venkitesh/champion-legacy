@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Purchase Bill</title>
+    <title>New Sales Bill</title>
     <link rel="stylesheet" href="../css/bill.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier+New" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -235,6 +235,13 @@
 
     </div>
 
+    <div class='card mx-auto rounded' style="width: 75%; height:140px; text-align:center; margin:30px; box-shadow: 1em 0em 1em 0.5em #ccc">
+        <div class="card-header" style=" text-align:left; background-color:rgb(199, 199, 199);">
+            <h4 style="font-weight: bold;">Options</h4>
+        </div>
+        <button id="createBillButton" class='btn waves-effect waves-light mr-auto' style="margin-top:20px; margin-left:30px; background-color: rgb(0, 0, 126); color:white; font-weight:bold; margin-right:55px;" type="submit">Create New Bill!</button>
+    </div>
+
     <script>
         const path = require('path');
         const electron = require('electron');
@@ -261,6 +268,15 @@
         medicines = [];
         doctors= [];
         doctorAddresses = [];
+
+        var globalTotalQty = 0;
+        var globalTotalCgst = 0;
+        var globalTotalSgst = 0;
+        var globalSubTotal = 0;
+        var globalBillAmount = 0;
+        var globalKfcess = 0;
+        var globalDiscount = 0;
+        var globalRoundoff  = 0;
 
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -409,6 +425,8 @@
 
         const addToBillButton = document.getElementById('addButton');
 
+        var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+
         addToBillButton.addEventListener('click',()=>{
             console.log("Add button is clicked!");
             if(nameField.value==='' || qtyField.value==='' || freeField.value==='' || rateField.value===''){
@@ -422,7 +440,7 @@
                             setTimeout(() =>msg.innerHTML='',10000);
                         }else{
                         
-                            var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+                            
                             var newRow   = billTable.insertRow();
 
                             var mfrCell  = newRow.insertCell(0);
@@ -508,10 +526,16 @@
                                 subTotal += parseFloat(billTable.rows[k].cells[12].innerHTML);
                                 totalCgst += ((parseFloat(billTable.rows[k].cells[12].innerHTML) * 6)/100)
                                 totalSgst += ((parseFloat(billTable.rows[k].cells[12].innerHTML) * 6)/100)
+                                
+                                globalTotalQty = totalQty;
+                                globalSubTotal = subTotal;
+                                globalTotalCgst = totalCgst;
+                                globalTotalSgst = totalSgst;
 
                             }
 
                             var kfcess = (subTotal * 0.0100);
+                            globalKfcess = kfcess;
                             document.getElementById('itemsAndQty').innerHTML = `TOTAL ITEMS : ${rowNumber}<br/>
                             TOTAL QTY : ${totalQty}<br/>`;
                             document.getElementById('totals').innerHTML = `SUB TOTAL : ${subTotal} <br/>
@@ -520,6 +544,7 @@
                             document.getElementById('kfcess').innerHTML =  `KF.CESS 1% : ${kfcess} `;
 
                             var billAmount = subTotal + totalSgst + totalCgst + kfcess;
+                            globalBillAmount = billAmount;
                             document.getElementById('finalAmount').innerHTML = billAmount;
                             var inwords = inWords(parseInt(billAmount));
                             document.getElementById('finalAmountInWords').innerHTML = `Rs. ${inwords}`;
@@ -552,7 +577,8 @@
             if(discount!=NaN && roundoff!=NaN){
                 var finalBillAmount = document.getElementById('finalAmount').innerHTML;
 
-               
+                globalDiscount = discount;
+                globalRoundoff = roundoff;
                 console.log(finalBillAmount);            
                 var finalAmount = parseFloat(finalBillAmount);
                 console.log(finalAmount);
@@ -564,17 +590,65 @@
             }
         })
 
+        const getFormFieldValues = function (formId) {
+            let keyValue = {columns: [], values: []}
+            $('#' + formId).find('input:visible, textarea:visible').each(function (idx, obj) {
+              keyValue.columns.push($(obj).attr('id'))
+              keyValue.values.push($(obj).val())
+            })
+            return keyValue
+        }
+
+        const createBillButton = document.getElementById('createBillButton');
+        createBillButton.addEventListener('click',()=>{
+            //let keyValueBillRows = {columns: [], values: []};
+            var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+
+            const billRowStarting = 1;
+            const billRowEnding = billRowStarting + billTable.rows.length;
+            
+            const currentRows= model.getSalesBillRows(path.join(__dirname,"../../database/"));
+
+            if(currentRows === undefined){
+                console.log("Db lu onnullayee");
+                console.log(`billRowStarting is ${billRowStarting}`);
+                console.log(`billRowEnding is ${billRowEnding}`);
+            }else{
+                billRowStarting = Object.keys(currentRows).length + 1;
+                console.log(`Records existing - billRowStarting is ${billRowStarting}`);
+                billRowEnding = billRowStarting + billTable.rows.length;
+                console.log(`billRowEnding is ${billRowEnding}`);
+            }
+
+            let keyValueBill = {columns: [], values: []}
+            
+            const billAttributes = ['doctor','date','billRowStarting','billRowEnding','totalItems','totalQuantity',
+            'subtotal','totalCgst','totalSgst','discount','roundoff','kfcess','billAmount'];
+            
+            const billAttributeValues = [customerNameField.value,today,billRowStarting,billRowEnding,billTable.rows.length,
+                globalTotalQty,globalSubTotal,globalTotalCgst,globalTotalSgst,globalDiscount,globalRoundoff,globalKfcess,globalBillAmount];
+            
+            for (const value in billAttributes){
+            //console.log(billAttributes[value]);
+            keyValueBill.columns.push(billAttributes[value]);
+            keyValueBill.values.push(billAttributeValues[value]);
+            }
+
+            console.log(keyValueBill);
+    
+        });
+
         function submitForm(e){
             e.preventDefault();
             //console.log('event clicked');
             //TODO for bill data into bill row db and bill db later on in the game
-            {{/*  let keyValue = getFormFieldValues('doctorForm')
+            let keyValue = getFormFieldValues('doctorForm')
             console.log('keyvalue last attempt')
             console.log(keyValue)
             
             model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
-              });  */}}
+              });  
             
         }
 

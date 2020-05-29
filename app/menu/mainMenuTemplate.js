@@ -190,25 +190,25 @@ function deleteMedicine(){
     deleteMedicineWindow.setMenuBarVisibility(false);
 }
 
-function newPurchaseBill(){
-    purchaseBillWindow = new BrowserWindow({
+function newSalesBill(){
+    salesBillWindow = new BrowserWindow({
         width:0,
         height:0,
-        title:'New Purchase BIll',
+        title:'New Sales Bill',
         webPreferences:{
             nodeIntegration:true
         }
     });
-    purchaseBillWindow.maximize();
-    purchaseBillWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'../html/newPurchaseBill.html'),
+    salesBillWindow.maximize();
+    salesBillWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/newSalesBill.html'),
         protocol: 'file',
         slashes: true
     }));
-    purchaseBillWindow.on('close',function(){
-        deleteMedicineWindow=null;
+    salesBillWindow.on('close',function(){
+        salesBillWindow=null;
     });
-    purchaseBillWindow.setMenuBarVisibility(false);
+    salesBillWindow.setMenuBarVisibility(false);
 }
 
 const mainMenuTemplate = [
@@ -300,7 +300,10 @@ const mainMenuTemplate = [
                 label:'Sale',
                 submenu:[
                     {
-                        label:'New'
+                        label:'New',
+                        click(){
+                            newSalesBill()
+                        }
                     },
                     {
                         label:'Modify'
@@ -315,9 +318,7 @@ const mainMenuTemplate = [
                 submenu:[
                     {
                         label:'New',
-                        click(){
-                            newPurchaseBill();
-                        }
+                        
                     },
                     {
                         label:'Modify'
