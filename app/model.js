@@ -393,19 +393,21 @@ module.exports.saveFormData = function (appPath, tableName, whichDb, keyValue, c
     let db = SQL.dbOpen(dbPath)
     // let db = SQL.dbOpen(window.model.db)
     if (db !== null) {
+      
       let query = 'INSERT OR REPLACE INTO `' + tableName
       query += '` (`' + keyValue.columns.join('`, `') + '`)'
       query += ' VALUES (' + _placeHoldersString(keyValue.values.length) + ')'
       let statement = db.prepare(query)
       try {
         if (statement.run(keyValue.values)) {
-          $('#' + keyValue.columns.join(', #'))
-          .addClass('form-control-success')
-          .animate({class: 'form-control-success'}, 1500, function () {
+          // $('#' + keyValue.columns.join(', #'))
+          // .addClass('form-control-success')
+          // .animate({class: 'form-control-success'}, 1500, function () {
+          
             if (typeof callback === 'function') {
               callback()
             }
-          })
+          
         } else {
           console.log('model.saveFormData', 'Query failed for', keyValue.values)
         }
