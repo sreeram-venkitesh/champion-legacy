@@ -31,13 +31,19 @@ app.on('ready', function(){
         protocol: 'file:',
         slashes: true
     })));
-    console.log('Doctor Db init')
+    console.log('Doctor DB init')
     model.initDb(app.getPath('userData'),'dealer.db',() => {
-        console.log('Dealer Db init')
+        console.log('Dealer DB init')
     });
     //console.log('Dealer Db init')
     model.initDb(app.getPath('userData'),'medicine.db',() => {
-        console.log('Medicine Db init')
+        console.log('Medicine DB init')
+    });
+    model.initDb(app.getPath('userData'),'salesbill.db',() => {
+        console.log('Sales Bills DB init')
+    });
+    model.initDb(app.getPath('userData'),'salesbillrow.db',() => {
+        console.log('Sales Bill Rows DB init')
     });
     //console.log('Medicine Db init')
     //Loading html file

@@ -88,6 +88,12 @@ module.exports.initDb = function (appPath, whichDb, callback) {
       case path.join(appPath, 'medicine.db'):
         query = fs.readFileSync(path.join(__dirname, 'db', 'medicineSchema.sql'), 'utf8')
         break;
+      case path.join(appPath, 'salesbillrow.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'salesBillRowSchema.sql'), 'utf8')
+        break;
+      case path.join(appPath, 'salesbill.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'salesBillSchema.sql'), 'utf8')
+        break;
     };
     let result = db.exec(query)
     if (Object.keys(result).length === 0 &&
@@ -110,7 +116,7 @@ module.exports.initDb = function (appPath, whichDb, callback) {
     */
     let query = 'SELECT count(*) as `count` FROM `sqlite_master`'
     let row = db.exec(query)
-    console.log('GOing to print rows')
+    console.log('Going to print rows')
     console.log(row)
     let tableCount = parseInt(row[0].values)
     if (tableCount === 0) {
@@ -132,7 +138,7 @@ module.exports.getDoctors = function (appPath) {
   let dbPath = path.join(appPath,'doctor.db')
   let db = SQL.dbOpen(dbPath)
   if (db !== null) {
-    let query = 'SELECT * FROM `doctors` ORDER BY `name` ASC'
+    let query = 'SELECT * FROM `doctors` ORDER BY `doctor_id` ASC'
     try {
       let row = db.exec(query)
       if (row !== undefined && row.length > 0) {
@@ -193,6 +199,30 @@ module.exports.getMedicines = function (appPath) {
     }
   }
 }
+
+module.exports.getSalesBillRows = function (appPath) {
+  let dbPath = path.join(appPath,'salesbillrow.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `salesbillrow` ORDER BY `billrow_id` ASC'
+    try {
+      let row = db.exec(query)
+      if (row !== undefined && row.length > 0) {
+        row = _rowsFromSqlDataObject(row[0])
+        // view.showPeople(row)
+        // console.log('going to print from inside fucntion')
+        // console.log(row)
+        return row
+      }
+    } catch (error) {
+      console.log('model.getBillRows', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+
   
 /*
   Fetch a person's data from the database.
@@ -363,19 +393,21 @@ module.exports.saveFormData = function (appPath, tableName, whichDb, keyValue, c
     let db = SQL.dbOpen(dbPath)
     // let db = SQL.dbOpen(window.model.db)
     if (db !== null) {
+      
       let query = 'INSERT OR REPLACE INTO `' + tableName
       query += '` (`' + keyValue.columns.join('`, `') + '`)'
       query += ' VALUES (' + _placeHoldersString(keyValue.values.length) + ')'
       let statement = db.prepare(query)
       try {
         if (statement.run(keyValue.values)) {
-          $('#' + keyValue.columns.join(', #'))
-          .addClass('form-control-success')
-          .animate({class: 'form-control-success'}, 1500, function () {
+          // $('#' + keyValue.columns.join(', #'))
+          // .addClass('form-control-success')
+          // .animate({class: 'form-control-success'}, 1500, function () {
+          
             if (typeof callback === 'function') {
               callback()
             }
-          })
+          
         } else {
           console.log('model.saveFormData', 'Query failed for', keyValue.values)
         }
