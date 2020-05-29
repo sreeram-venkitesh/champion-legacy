@@ -604,7 +604,7 @@
             //let keyValueBillRows = {columns: [], values: []};
             var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
 
-            const billRowStarting = 1;
+            {{/*  const billRowStarting = 1;
             const billRowEnding = billRowStarting + billTable.rows.length;
             
             const currentRows= model.getSalesBillRows(path.join(__dirname,"../../database/"));
@@ -618,9 +618,28 @@
                 console.log(`Records existing - billRowStarting is ${billRowStarting}`);
                 billRowEnding = billRowStarting + billTable.rows.length;
                 console.log(`billRowEnding is ${billRowEnding}`);
+            }  */}}
+
+            var rows = [];
+            
+            
+            for(var u=0; u<billTable.rows.length; u++){
+                
+                let keyValueBillRow = {columns: [], values: []}
+                
+                const billRowAttributes = ['MFR','NAME','PACK','HSN','BATCH','EXP','QTY','FREE','RATE','MRP','CGST','SGST','AMNT'];
+                
+                for (var q =0; q<=12; q++){
+                keyValueBillRow.columns.push(billRowAttributes[q]);
+                keyValueBillRow.values.push(billTable.rows[u].cells.item(q).innerHTML);
+                }
+
+                rows.push(keyValueBillRow);
             }
 
-            let keyValueBill = {columns: [], values: []}
+            console.log(rows);
+
+            {{/*  let keyValueBill = {columns: [], values: []}
             
             const billAttributes = ['doctor','date','billRowStarting','billRowEnding','totalItems','totalQuantity',
             'subtotal','totalCgst','totalSgst','discount','roundoff','kfcess','billAmount'];
@@ -634,7 +653,7 @@
             keyValueBill.values.push(billAttributeValues[value]);
             }
 
-            console.log(keyValueBill);
+            console.log(keyValueBill);  */}}
     
         });
 
