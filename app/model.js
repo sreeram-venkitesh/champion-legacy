@@ -425,7 +425,39 @@ module.exports.saveFormData = function (appPath, tableName, whichDb, keyValue, c
           // $('#' + keyValue.columns.join(', #'))
           // .addClass('form-control-success')
           // .animate({class: 'form-control-success'}, 1500, function () {
+            if (typeof callback === 'function') {
+              callback()
+            }
           
+        } else {
+          console.log('model.saveFormData', 'Query failed for', keyValue.values)
+        }
+      } catch (error) {
+        console.log('model.saveFormData', error.message)
+      } finally {
+        SQL.dbClose(db, dbPath)
+      }
+    }
+  }
+}
+
+module.exports.saveBillRow = function (appPath, tableName, whichDb, keyValue, callback) {
+  if (keyValue.columns.length > 0) {
+    let dbPath = path.join(appPath, whichDb)
+    //let dbPath = path.join(appPath,'example.db')
+    let db = SQL.dbOpen(dbPath)
+    // let db = SQL.dbOpen(window.model.db)
+    if (db !== null) {
+      
+      let query = 'INSERT INTO `' + tableName
+      query += '` (`' + keyValue.columns.join('`, `') + '`)'
+      query += ' VALUES (' + _placeHoldersString(keyValue.values.length) + ')'
+      let statement = db.prepare(query)
+      try {
+        if (statement.run(keyValue.values)) {
+          // $('#' + keyValue.columns.join(', #'))
+          // .addClass('form-control-success')
+          // .animate({class: 'form-control-success'}, 1500, function () {
             if (typeof callback === 'function') {
               callback()
             }

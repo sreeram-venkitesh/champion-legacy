@@ -515,7 +515,7 @@
                             amountCell.className = "bill-row-item";
 
                             const rowNumber = billTable.rows.length;
-
+ 
                             var totalQty = 0;
                             var totalCgst = 0;
                             var totalSgst = 0;
@@ -635,7 +635,7 @@
             for (var item in rows){
                 console.log('GOing to print row');
                 console.log(rows[item]);
-                model.saveFormData(path.join(__dirname,"../../database/"),'salesbillrow', 'salesbillrow.db', rows[item], function () {
+                model.saveBillRow(path.join(__dirname,"../../database/"),'salesbillrow', 'salesbillrow.db', rows[item], function () {
                     console.log(`Wrote Row!`);
                 });
             }
