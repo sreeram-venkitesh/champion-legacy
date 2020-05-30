@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Sales Bill</title>
+    <title>View Sales Bill</title>
     <link rel="stylesheet" href="../css/bill.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier+New" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -53,8 +53,8 @@
                         <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">Address</h5>
                     </div>
                     <div class="col float-left" style="margin-left: 70px;">
-                        <h5 id="doctorName" style="margin-bottom:3px; width:fit-content;"></h5><br/>
-                        <h5 id="doctorAddress" style="margin-top: 15px; margin-right:0px; width:fit-content">Address</h5>
+                        <h5 id="doctorName" style="margin-top:20px; margin-bottom:3px; width:fit-content;"></h5><br/>
+                        <h5 id="doctorAddress" style="margin-top: 0px; margin-right:0px; width:fit-content"></h5>
                     </div>
                 </div>
             </div>
@@ -67,8 +67,8 @@
                         <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">PAGE</h5>
                     </div>
                     <div class="col float-right" style="margin-left: 70px; text-align:left">
-                        <h5 id="invoice_number" style="width: fit-content; text-align:left; margin-bottom:0px;"><br/>
-                        <h5 id="dateField" style="margin-top: 15px; margin-right:0px; width:fit-content"></h5>
+                        <h5 id="invoice_number" style="margin-top: 20px; width: fit-content; text-align:left; margin-bottom:0px;"><br/>
+                        <h5 id="dateField" style="margin-top: 20px; margin-right:0px; width:fit-content"></h5>
                         <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">1</h5>
                     </div>
                 </div>
@@ -129,8 +129,8 @@
                     CHARGES   : 0.00 
                 </p>
                 <div>
-                    <p class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;"> DISCOUNT :</p>
-                    <p id="discount" style="margin-left:10px; width:100px;"></p>
+                    <p id="discount" class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;"> DISCOUNT :</p>
+                    
                 </div>
             </div>
 
@@ -141,8 +141,8 @@
                     TOTAL CGST : 
                 </p>
                 <div>
-                    <p class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;">ROUND OFF :</p>
-                    <p id="roundOff" style="margin-left:10px; width:100px;"></p>
+                    <p id="roundOff" class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;">ROUND OFF :</p>
+                    
                 </div>
             </div>
         </div>
@@ -234,6 +234,71 @@
           }
 
         console.log(currentBill);
+
+        const doctorName = document.getElementById('doctorName');
+        doctorName.innerHTML = currentBill.doctor;
+
+        const doctorAddress = document.getElementById('doctorAddress');
+
+        doctorList = model.getDoctors(path.join(__dirname,"../../database/"));
+        for(const i in doctorList){
+            if(currentBill.doctor===doctorList[i].name){
+                doctorAddress.innerHTML = doctorList[i].address;
+                break;
+            }
+        }
+
+        const invoice_number = document.getElementById('invoice_number');
+        invoice_number.innerHTML = currentBill.bill_id;
+
+        const dateField = document.getElementById('dateField');
+        dateField.innerHTML = currentBill.date;
+
+
+        const itemsAndQty = document.getElementById('itemsAndQty');
+        itemsAndQty.innerHTML = `TOTAL ITEMS : ${currentBill.totalItems}<br/>
+        TOTAL QTY : ${currentBill.totalQuantity}<br/>`;
+        
+        const discount = document.getElementById('discount');
+        discount.innerHTML = `DISCOUNT : ${currentBill.discount}`;
+
+        const totals = document.getElementById('totals');
+        totals.innerHTML = `SUB TOTAL : ${currentBill.subtotal} <br/>
+        TOTAL SGST : ${currentBill.totalSgst}<br/>
+        TOTAL CGST : ${currentBill.totalCgst}`;
+        
+        const roundOff = document.getElementById('roundOff');
+        roundOff.innerHTML = `ROUNDOFF : ${currentBill.roundoff}`;
+
+        const kfcess = document.getElementById('kfcess');
+        kfcess.innerHTML =  `KF.CESS 1% : ${currentBill.kfcess}`;
+        
+        const billAmount = document.getElementById('finalAmount');
+        billAmount.innerHTML = currentBill.billAmount;
+
+        var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+        var b = ['', '', 'Twenty','Thirty','Forty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
+
+        function inWords (num) {
+            if ((num = num.toString()).length > 9) return 'overflow';
+            n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+            if (!n) return; var str = '';
+            str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : '';
+            str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
+            str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
+            str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+            str += 'Only'; 
+            return str;
+        }
+
+        const billAmountWords = document.getElementById('finalAmountInWords');
+        //console.log(parseFloat(currentBill.billAmount));
+        
+        billAmountWords.innerHTML = inWords(parseFloat(currentBill.billAmount));
+
+        
+
     </script>
 </body>
 </html>
