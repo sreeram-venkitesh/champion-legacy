@@ -220,6 +220,7 @@ function salesBillBook(){
             nodeIntegration:true
         }
     });
+    salesBillBookWindow.maximize();
     salesBillBookWindow.loadURL(url.format({
         pathname: path.join(__dirname,'../html/viewSalesBills.html'),
         protocol: 'file',
