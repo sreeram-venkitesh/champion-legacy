@@ -257,82 +257,79 @@
         const rows = model.getSalesBillRows(path.join(__dirname,"../../database/"));
         console.log(rows);
 
-        {{/*  for(var i =currentBill.billRowStarting; i<currentBill.){
+        var billTable = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+
+        
+        for(var i =currentBill.billRowStarting-1; i<currentBill.billRowEnding-1; i++){
                     
                     var newRow   = billTable.insertRow();
-
+                    
                     var mfrCell  = newRow.insertCell(0);
-                    var mfrText  = document.createTextNode(medicineList[i].manufacturer);
+                    var mfrText  = document.createTextNode(rows[i].MFR);
                     mfrCell.appendChild(mfrText);
                     mfrCell.className = "bill-row-item";
 
                     var nameCell  = newRow.insertCell(1);
-                    var nameText  = document.createTextNode(nameField.value);
+                    var nameText  = document.createTextNode(rows[i].NAME);
                     nameCell.appendChild(nameText);
                     nameCell.className = "bill-row-item";
                     //pack hsn batch exp qty free rate mrp cgst sgst amnt
                     var packCell  = newRow.insertCell(2);
-                    var packText  = document.createTextNode(medicineList[i].packing);
+                    var packText  = document.createTextNode(rows[i].PACK);
                     packCell.appendChild(packText);
                     packCell.className = "bill-row-item";
 
                     var hsnCell  = newRow.insertCell(3);
                     //var hsnText  = document.createTextNode(medicineList[i].manufacturer);
-                    var hsnText  = document.createTextNode(medicineList[i].hsn);
+                    var hsnText  = document.createTextNode(rows[i].HSN);
                     hsnCell.appendChild(hsnText);
                     hsnCell.className = "bill-row-item";
                     
                     var batchCell  = newRow.insertCell(4);
-                    var batchText  = document.createTextNode(medicineList[i].batch);
+                    var batchText  = document.createTextNode(rows[i].BATCH);
                     batchCell.appendChild(batchText);
                     batchCell.className = "bill-row-item";
 
                     var expCell  = newRow.insertCell(5);
-                    var expText  = document.createTextNode(medicineList[i].expiry);
+                    var expText  = document.createTextNode(rows[i].EXP);
                     expCell.appendChild(expText);
                     expCell.className = "bill-row-item";
 
                     var qtyCell  = newRow.insertCell(6);
-                    var qtyText  = document.createTextNode(qtyField.value);
+                    var qtyText  = document.createTextNode(rows[i].QTY);
                     qtyCell.appendChild(qtyText);
                     qtyCell.className = "bill-row-item";
 
                     var freeCell  = newRow.insertCell(7);
-                    var freeText  = document.createTextNode(freeField.value);
+                    var freeText  = document.createTextNode(rows[i].FREE);
                     freeCell.appendChild(freeText);
                     freeCell.className = "bill-row-item";
 
                     var rateCell  = newRow.insertCell(8);
-                    var rateText  = document.createTextNode(rateField.value);
+                    var rateText  = document.createTextNode(rows[i].RATE);
                     rateCell.appendChild(rateText);
                     rateCell.className = "bill-row-item";
 
                     var mrpCell  = newRow.insertCell(9);
-                    var mrpText  = document.createTextNode(medicineList[i].mrp);
+                    var mrpText  = document.createTextNode(rows[i].MRP);
                     mrpCell.appendChild(mrpText);
                     mrpCell.className = "bill-row-item";
 
                     var cgstCell  = newRow.insertCell(10);
-                    var cgstText  = document.createTextNode('6.0');
+                    var cgstText  = document.createTextNode(rows[i].CGST);
                     cgstCell.appendChild(cgstText);
                     cgstCell.className = "bill-row-item";
 
                     var sgstCell  = newRow.insertCell(11);
-                    var sgstText  = document.createTextNode('6.0');
+                    var sgstText  = document.createTextNode(rows[i].SGST);
                     sgstCell.appendChild(sgstText);
                     sgstCell.className = "bill-row-item";
 
-                    var quantity = parseInt(qtyField.value);
-                    var rate = parseFloat(rateField.value);
-
-                    var amount = quantity * rate;
-
                     var amountCell  = newRow.insertCell(12);
-                    var amountText  = document.createTextNode(amount);
+                    var amountText  = document.createTextNode(rows[i].AMNT);
                     amountCell.appendChild(amountText);
                     amountCell.className = "bill-row-item";
-
-        }  */}}
+        }
 
         const itemsAndQty = document.getElementById('itemsAndQty');
         itemsAndQty.innerHTML = `TOTAL ITEMS : ${currentBill.totalItems}<br/>
