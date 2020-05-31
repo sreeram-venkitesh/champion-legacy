@@ -211,6 +211,27 @@ function newSalesBill(){
     salesBillWindow.setMenuBarVisibility(false);
 }
 
+function salesBillBook(){
+    salesBillBookWindow = new BrowserWindow({
+        width:600,
+        height:900,
+        title:'New Sales Bill',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    salesBillBookWindow.maximize();
+    salesBillBookWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/viewSalesBills.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    salesBillBookWindow.on('close',function(){
+        salesBillBookWindow=null;
+    });
+    salesBillBookWindow.setMenuBarVisibility(false);
+}
+
 const mainMenuTemplate = [
     {
         label: 'File',
@@ -345,6 +366,17 @@ const mainMenuTemplate = [
     {
         label:'Books',
         submenu:[
+            {
+                label:'Bill Books',
+                submenu:[
+                    {
+                        label:'Sales Bills Book',
+                        click(){
+                            salesBillBook();
+                        }
+                    }
+                ]
+            }
 
         ]
     },

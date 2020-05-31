@@ -515,7 +515,7 @@
                             amountCell.className = "bill-row-item";
 
                             const rowNumber = billTable.rows.length;
-
+ 
                             var totalQty = 0;
                             var totalCgst = 0;
                             var totalSgst = 0;
@@ -633,15 +633,49 @@
             }
 
             for (var item in rows){
-                console.log('GOing to print row');
+                console.log('Going to print row');
                 console.log(rows[item]);
-                model.saveFormData(path.join(__dirname,"../../database/"),'salesbillrow', 'salesbillrow.db', rows[item], function () {
+                
+                model.saveBillRow(path.join(__dirname,"../../database/"),'salesbillrow', 'salesbillrow.db', rows[item], function () {
                     console.log(`Wrote Row!`);
                 });
+
+                const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
+                
+                for(const i in medicineList){
+                    if(rows[item].values[1] == medicineList[i].name){
+                        console.log(medicineList[i].stock);
+                        var stock = parseInt(medicineList[i].stock);
+                        var newStock = stock - rows[item].values[6] - rows[item].values[7];
+                        console.log(newStock);
+                        medicineList[i].stock = newStock;
+
+                        let keyValueMedicine = {columns: [], values: []};
+                        const medicineAttributes = ['medicine_id','name','manufacturer','hsn','batch','packing','expiry','mrp','stock'];
+                        const medicineAttributeValues = [medicineList[i].medicine_id,medicineList[i].name,medicineList[i].manufacturer,medicineList[i].hsn,medicineList[i].batch,
+                        medicineList[i].packing,medicineList[i].expiry,medicineList[i].mrp,medicineList[i].stock];
+
+                        for (const value in medicineAttributes){
+                            //console.log(billAttributes[value]);
+                            keyValueMedicine.columns.push(medicineAttributes[value]);
+                            keyValueMedicine.values.push(medicineAttributeValues[value]);
+                        }
+
+                        console.log('Keyvalue is');
+                        console.log(keyValueMedicine);
+
+                        model.saveFormData(path.join(__dirname,"../../database/"),'medicine', 'medicine.db', keyValueMedicine, function () {
+                            console.log('Updated Stocks!')
+                        });
+
+                    }
+                }
+
+                
             }
 
             //console.log(rows);
-            let keyValueBill = {columns: [], values: []}
+            let keyValueBill = {columns: [], values: []};
             
             const billAttributes = ['doctor','date','billRowStarting','billRowEnding','totalItems','totalQuantity',
             'subtotal','totalCgst','totalSgst','discount','roundoff','kfcess','billAmount'];
@@ -657,7 +691,7 @@
             }
 
             console.log(keyValueBill);
-            model.saveFormData(path.join(__dirname,"../../database/"),'salesbill', 'salesbill.db', keyValueBill, function () {
+            model.saveBill(path.join(__dirname,"../../database/"),'salesbill', 'salesbill.db', keyValueBill, function () {
                 console.log(`Wrote Bill into DB!`);
               });
     

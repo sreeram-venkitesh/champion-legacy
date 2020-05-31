@@ -4,15 +4,15 @@ CREATE TABLE IF NOT EXISTS "salesbill" (
 	 "date" TEXT(255,0) NOT NULL,
      "billRowStarting" TEXT(255,0) NOT NULL UNIQUE,
      "billRowEnding" TEXT(255,0) NOT NULL UNIQUE,
-     "totalItems" TEXT(255,0) NOT NULL UNIQUE,
-     "totalQuantity" TEXT(255,0) NOT NULL UNIQUE,
-     "subtotal" TEXT(255,0) NOT NULL UNIQUE,
-     "totalCgst" TEXT(255,0) NOT NULL UNIQUE,
-     "totalSgst" TEXT(255,0) NOT NULL UNIQUE,
-     "discount" TEXT(255,0) NOT NULL UNIQUE,
-     "roundoff" TEXT(255,0) NOT NULL UNIQUE,
-     "kfcess" TEXT(255,0) NOT NULL UNIQUE,
-     "billAmount" TEXT(255,0) NOT NULL UNIQUE
+     "totalItems" TEXT(255,0) NOT NULL ,
+     "totalQuantity" TEXT(255,0) NOT NULL ,
+     "subtotal" TEXT(255,0) NOT NULL ,
+     "totalCgst" TEXT(255,0) NOT NULL ,
+     "totalSgst" TEXT(255,0) NOT NULL ,
+     "discount" TEXT(255,0) NOT NULL ,
+     "roundoff" TEXT(255,0) NOT NULL ,
+     "kfcess" TEXT(255,0) NOT NULL ,
+     "billAmount" TEXT(255,0) NOT NULL
 );
 CREATE INDEX "doctor_index" ON salesbill ("doctor" COLLATE NOCASE ASC);
 CREATE INDEX "date_index" ON salesbill ("date" COLLATE NOCASE ASC);
