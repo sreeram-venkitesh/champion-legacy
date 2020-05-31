@@ -657,7 +657,7 @@
             }
 
             console.log(keyValueBill);
-            model.saveFormData(path.join(__dirname,"../../database/"),'salesbill', 'salesbill.db', keyValueBill, function () {
+            model.saveBill(path.join(__dirname,"../../database/"),'salesbill', 'salesbill.db', keyValueBill, function () {
                 console.log(`Wrote Bill into DB!`);
               });
     
