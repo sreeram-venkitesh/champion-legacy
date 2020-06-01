@@ -18,8 +18,13 @@
                 <label style='font-size:20px'>Enter Phone Number</label>
                 <input type='number' id='phone'>
             </div>
-            <br/>
-            <button class='btn waves-effect waves-light' type="submit">Create!</button>
+            <div style="text-align: center;">
+                <br/>
+                <label style="font-size: 20px; font-weight:bold; color:black;" id="msg"></label>
+                <br/>
+                <br/>
+                <button class='btn waves-effect waves-light' style="text-align:center" type="submit">Create!</button>
+            </div>
         </form>
     </div>
 
@@ -42,7 +47,7 @@
             })
             return keyValue
         }
-        
+        const msg = document.getElementById('msg');
 
         function submitForm(e){
             e.preventDefault();
@@ -50,10 +55,15 @@
             let keyValue = getFormFieldValues('doctorForm')
             console.log('keyvalue last attempt')
             console.log(keyValue)
+
+            
             
             model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
-              });
+                msg.innerHTML = 'New Doctor Information Added!';
+                setTimeout(() =>msg.innerHTML="",5000);
+                setTimeout(()=>location.reload(),5000)
+            });
         }
 
         form.addEventListener("submit",submitForm);

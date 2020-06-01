@@ -239,7 +239,10 @@
         <div class="card-header" style=" text-align:left; background-color:rgb(199, 199, 199);">
             <h4 style="font-weight: bold;">Options</h4>
         </div>
-        <button id="createBillButton" class='btn waves-effect waves-light mr-auto' style="margin-top:20px; margin-left:30px; background-color: rgb(0, 0, 126); color:white; font-weight:bold; margin-right:55px;" type="submit">Create New Bill!</button>
+        <div class="row">
+            <button id="createBillButton" class='btn waves-effect waves-light mr-auto col-4' style="margin-top:20px; margin-left:30px; background-color: rgb(0, 0, 126); color:white; font-weight:bold; margin-right:55px;" type="submit">Create New Bill!</button>
+            <button id="printBillButton" class='btn waves-effect waves-light mr-auto col-4' style="margin-top:20px; margin-left:30px; background-color: rgb(0, 0, 126); color:white; font-weight:bold; margin-right:55px;" type="print">Print Bill</button>
+        </div>
     </div>
 
     <script>
@@ -697,19 +700,14 @@
     
         });
 
-        function submitForm(e){
-            e.preventDefault();
-            //console.log('event clicked');
-            //TODO for bill data into bill row db and bill db later on in the game
-            let keyValue = getFormFieldValues('doctorForm')
-            console.log('keyvalue last attempt')
-            console.log(keyValue)
-            
-            model.saveFormData(path.join(__dirname,"../../database/"),'doctors', 'doctor.db', keyValue, function () {
-                console.log('Write kazjhinjuu')
-              });  
-            
-        }
+        const printBillButton = document.getElementById('printBillButton');
+
+        printBillButton.addEventListener('click',()=>{
+            console.log("printe");
+            window.print();
+        });
+
+       
 
         //form.addEventListener("submit",submitForm);
     </script>

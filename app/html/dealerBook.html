@@ -32,8 +32,13 @@
                             <label style='font-size:20px'>Enter New Phone Number</label>
                             <input type='number' id='phone'>
                         </div>
-                        <br/>
-                        <button class='btn waves-effect waves-light' type="submit">Submit!</button>
+                        <div style="text-align: center;">
+                            <br/>
+                            <label style="font-size: 20px; font-weight:bold; color:black;" id="msg"></label>
+                            <br/>
+                            <br/>
+                            <button class='btn waves-effect waves-light' style="text-align:center" type="submit">Edit!</button>
+                        </div>
                     </form>
                     <br/>
                 </div>
@@ -105,9 +110,10 @@
             
             model.saveFormData(path.join(__dirname,"../../database/"),'dealers', 'dealer.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
-                });  
-            console.log("Edit Njekki njekki!");
-            location.reload();
+            });  
+            msg.innerHTML = 'Data Updated!';
+            setTimeout(() =>msg.innerHTML="",2000);
+            setTimeout(()=>location.reload(),2000)
         }
 
         form.addEventListener("submit",submitForm);
