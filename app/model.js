@@ -94,6 +94,13 @@ module.exports.initDb = function (appPath, whichDb, callback) {
       case path.join(appPath, 'salesbill.db'):
         query = fs.readFileSync(path.join(__dirname, 'db', 'salesBillSchema.sql'), 'utf8')
         break;
+      case path.join(appPath, 'purchasebillrow.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'purchaseBillRowSchema.sql'), 'utf8')
+        break;
+      case path.join(appPath, 'purchasebill.db'):
+        query = fs.readFileSync(path.join(__dirname, 'db', 'purchaseBillSchema.sql'), 'utf8')
+        break;
+      
     };
     let result = db.exec(query)
     if (Object.keys(result).length === 0 &&
@@ -222,6 +229,30 @@ module.exports.getSalesBillRows = function (appPath) {
   }
 }
 
+module.exports.getPurchaseBillRows = function (appPath) {
+  let dbPath = path.join(appPath,'purchasebillrow.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `purchasebillrow` ORDER BY `billrow_id` ASC'
+    try {
+      let row = db.exec(query)
+      console.log(row)
+      console.log('query exefcuted')
+      if (row !== undefined && row.length > 0) {
+        row = _rowsFromSqlDataObject(row[0])
+        // view.showPeople(row)
+        console.log('going to print from inside fucntion')
+        console.log(row)
+        return row
+      }
+    } catch (error) {
+      console.log('model.getPurchaseBillRows', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
 module.exports.getSalesBills = function (appPath) {
   let dbPath = path.join(appPath,'salesbill.db')
   let db = SQL.dbOpen(dbPath)
@@ -238,6 +269,28 @@ module.exports.getSalesBills = function (appPath) {
       }
     } catch (error) {
       console.log('model.getBills', error.message)
+    } finally {
+      SQL.dbClose(db, dbPath)
+    }
+  }
+}
+
+module.exports.getPurchaseBills = function (appPath) {
+  let dbPath = path.join(appPath,'purchasebill.db')
+  let db = SQL.dbOpen(dbPath)
+  if (db !== null) {
+    let query = 'SELECT * FROM `purchasebill` ORDER BY `bill_id` ASC'
+    try {
+      let row = db.exec(query)
+      if (row !== undefined && row.length > 0) {
+        row = _rowsFromSqlDataObject(row[0])
+        // view.showPeople(row)
+        // console.log('going to print from inside fucntion')
+        // console.log(row)
+        return row
+      }
+    } catch (error) {
+      console.log('model.getPurchaseBills', error.message)
     } finally {
       SQL.dbClose(db, dbPath)
     }
@@ -470,7 +523,7 @@ module.exports.editFormData = function (appPath, tableName, whichDb, keyValue, c
   }
 }
 
-module.exports.saveBillRow = function (appPath, tableName, whichDb, keyValue, callback) {
+module.exports.saveSalesBillRow = function (appPath, tableName, whichDb, keyValue, callback) {
   if (keyValue.columns.length > 0) {
     let dbPath = path.join(appPath, whichDb)
     //let dbPath = path.join(appPath,'example.db')
@@ -503,7 +556,73 @@ module.exports.saveBillRow = function (appPath, tableName, whichDb, keyValue, ca
   }
 }
 
-module.exports.saveBill = function (appPath, tableName, whichDb, keyValue, callback) {
+module.exports.savePurchaseBillRow = function (appPath, tableName, whichDb, keyValue, callback) {
+  if (keyValue.columns.length > 0) {
+    let dbPath = path.join(appPath, whichDb)
+    //let dbPath = path.join(appPath,'example.db')
+    let db = SQL.dbOpen(dbPath)
+    // let db = SQL.dbOpen(window.model.db)
+    if (db !== null) {
+      
+      let query = 'INSERT INTO `' + tableName
+      query += '` (`' + keyValue.columns.join('`, `') + '`)'
+      query += ' VALUES (' + _placeHoldersString(keyValue.values.length) + ')'
+      let statement = db.prepare(query)
+      try {
+        if (statement.run(keyValue.values)) {
+          // $('#' + keyValue.columns.join(', #'))
+          // .addClass('form-control-success')
+          // .animate({class: 'form-control-success'}, 1500, function () {
+            if (typeof callback === 'function') {
+              callback()
+            }
+          
+        } else {
+          console.log('model.saveFormData', 'Query failed for', keyValue.values)
+        }
+      } catch (error) {
+        console.log('model.saveFormData', error.message)
+      } finally {
+        SQL.dbClose(db, dbPath)
+      }
+    }
+  }
+}
+
+module.exports.saveSalesBill = function (appPath, tableName, whichDb, keyValue, callback) {
+  if (keyValue.columns.length > 0) {
+    let dbPath = path.join(appPath, whichDb)
+    //let dbPath = path.join(appPath,'example.db')
+    let db = SQL.dbOpen(dbPath)
+    // let db = SQL.dbOpen(window.model.db)
+    if (db !== null) {
+      
+      let query = 'INSERT INTO `' + tableName
+      query += '` (`' + keyValue.columns.join('`, `') + '`)'
+      query += ' VALUES (' + _placeHoldersString(keyValue.values.length) + ')'
+      let statement = db.prepare(query)
+      try {
+        if (statement.run(keyValue.values)) {
+          // $('#' + keyValue.columns.join(', #'))
+          // .addClass('form-control-success')
+          // .animate({class: 'form-control-success'}, 1500, function () {
+            if (typeof callback === 'function') {
+              callback()
+            }
+          
+        } else {
+          console.log('model.saveFormData', 'Query failed for', keyValue.values)
+        }
+      } catch (error) {
+        console.log('model.saveFormData', error.message)
+      } finally {
+        SQL.dbClose(db, dbPath)
+      }
+    }
+  }
+}
+
+module.exports.savePurchaseBill = function (appPath, tableName, whichDb, keyValue, callback) {
   if (keyValue.columns.length > 0) {
     let dbPath = path.join(appPath, whichDb)
     //let dbPath = path.join(appPath,'example.db')

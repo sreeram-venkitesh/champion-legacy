@@ -45,6 +45,12 @@ app.on('ready', function(){
     model.initDb(app.getPath('userData'),'salesbillrow.db',() => {
         console.log('Sales Bill Rows DB init')
     });
+    model.initDb(app.getPath('userData'),'purchasebillrow.db',() => {
+        console.log('Purchase Bill Rows DB init')
+    });
+    model.initDb(app.getPath('userData'),'purchasebill.db',() => {
+        console.log('Purchase Bill DB init')
+    });
     //console.log('Medicine Db init')
     //Loading html file
     // mainWindow.loadURL(url.format({

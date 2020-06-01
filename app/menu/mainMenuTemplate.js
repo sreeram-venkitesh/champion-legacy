@@ -211,11 +211,32 @@ function newSalesBill(){
     salesBillWindow.setMenuBarVisibility(false);
 }
 
+function newPurchaseBill(){
+    purchaseBillWindow = new BrowserWindow({
+        width:0,
+        height:0,
+        title:'New Purchase Bill',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    purchaseBillWindow.maximize();
+    purchaseBillWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/newPurchaseBill.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    purchaseBillWindow.on('close',function(){
+        salesBillWindow=null;
+    });
+    purchaseBillWindow.setMenuBarVisibility(false);
+}
+
 function salesBillBook(){
     salesBillBookWindow = new BrowserWindow({
         width:600,
         height:900,
-        title:'New Sales Bill',
+        title:'Sales Bill Book',
         webPreferences:{
             nodeIntegration:true
         }
@@ -230,6 +251,27 @@ function salesBillBook(){
         salesBillBookWindow=null;
     });
     salesBillBookWindow.setMenuBarVisibility(false);
+}
+
+function purchaseBillBook(){
+    purchaseBillBookWindow = new BrowserWindow({
+        width:600,
+        height:900,
+        title:'Purchase Bill Book',
+        webPreferences:{
+            nodeIntegration:true
+        }
+    });
+    purchaseBillBookWindow.maximize();
+    purchaseBillBookWindow.loadURL(url.format({
+        pathname: path.join(__dirname,'../html/viewPurchaseBills.html'),
+        protocol: 'file',
+        slashes: true
+    }));
+    purchaseBillBookWindow.on('close',function(){
+        salesBillBookWindow=null;
+    });
+    purchaseBillBookWindow.setMenuBarVisibility(false);
 }
 
 const mainMenuTemplate = [
@@ -333,7 +375,10 @@ const mainMenuTemplate = [
                 }
             },
             {
-                label:'New Purchase Bill'  
+                label:'New Purchase Bill',
+                click(){
+                    newPurchaseBill();
+                }  
             },
             {
                 type:'separator'
@@ -398,6 +443,12 @@ const mainMenuTemplate = [
                 label:'Sales Bills Book',
                 click(){
                     salesBillBook();
+                }
+            },
+            {
+                label:'Purchase Bills Book',
+                click(){
+                    purchaseBillBook();
                 }
             }
 

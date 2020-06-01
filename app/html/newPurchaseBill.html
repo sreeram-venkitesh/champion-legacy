@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Sales Bill</title>
+    <title>New Purchase Bill</title>
     <link rel="stylesheet" href="../css/bill.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier+New" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -42,19 +42,19 @@
         <hr style="border-top: 2px dashed #999;">
         
         <div class='row'>
-            <div class="col" style="text-align: center;"> <p style="font-weight: bold; font-size: 20px;">CREDIT</p></div>
+            <div class="col" style="text-align: center;"> <p style="font-weight: bold; font-size: 20px;">PURCHASE</p></div>
         </div>
         
         <div class="row" style="margin-bottom:0px">
             <div class="col float-left" style="margin-left: 50px; text-align:left;" >
                 <div class="row">
                     <div class="col-1 float-left" style="text-align: left; width:fit-content">
-                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">Doctor</h5>
+                        <h5 style="margin-top: 20px; margin-right:0px; width:fit-content ">Dealer</h5>
                         <h5 style="margin-top: 20px; margin-right:0px; width:fit-content">Address</h5>
                     </div>
                     <div class="col float-left" style="margin-left: 70px;">
-                        <input id="doctorAutocomplete" type="text" placeholder="Doctor" style="margin-bottom:3px; width:fit-content;"><br/>
-                        <h5 id="doctorAddress" style="margin-top: 15px; margin-right:0px; width:fit-content">Address</h5>
+                        <input id="dealerAutocomplete" type="text" placeholder="Dealer" style="margin-bottom:3px; width:fit-content;"><br/>
+                        <h5 id="dealerAddress" style="margin-top: 15px; margin-right:0px; width:fit-content">Address</h5>
                     </div>
                 </div>
             </div>
@@ -99,6 +99,7 @@
                         <th scope="col">QTY</th>
                         <th scope="col">FREE</th>
                         <th scope="col">RATE</th>
+                        <th scope="col">DISC</th>
                         <th scope="col">MRP</th>
                         <th scope="col">CGST</th>
                         <th scope="col">SGST</th>
@@ -136,6 +137,9 @@
                 <input id="rateField" placeholder="Enter Rate">
             </div>
             <div class="col">
+                <input id="discField" placeholder="Enter Discount">
+            </div>
+            <div class="col">
                 <button id="addButton" class='btn waves-effect waves-light' style="background-color: blue; color:white; font-weight:bold;" type="submit">Add to Bill</button>
             </div>
             
@@ -152,21 +156,10 @@
                 </p>
             </div>
                 
-            <div class="col float-right" style="text-align: left; margin-left:400px">
-                <p style="font-size:22px; margin-bottom:0px;">
-                    CR/DR AMNT: 0.00<br/>
-                    CR/DR Add<br/>
-                    CHARGES   : 0.00 
-                </p>
-                <div>
-                    <p class="float-left" style="margin-top:10px; margin-right:0px; font-size:22px;"> DISCOUNT :</p>
-                    <input id="discountInput" type="float" placeholder="0" style="margin-left:10px; width:100px;">
-                </div>
-            </div>
-
             <div class="col float-right" style="text-align: left;">
                 <p id="totals" style="text-align:left; margin-bottom:0px; font-size:22px">
                     SUB TOTAL : <br/>
+                    DISCOUNT : <br/>
                     TOTAL SGST : <br/>
                     TOTAL CGST : 
                 </p>
@@ -178,18 +171,13 @@
         </div>
 
         <div class="row">
-            <button id="updatePriceButton" class='btn waves-effect waves-light ml-auto' style="background-color: rgb(141, 141, 226); color:white; font-weight:bold; margin-right:55px;" type="submit">Add Discount and Roundoff</button>
+            <button id="updatePriceButton" class='btn waves-effect waves-light ml-auto' style="background-color: rgb(141, 141, 226); color:white; font-weight:bold; margin-right:55px;" type="submit">Add Roundoff</button>
         </div>
 
         <hr style="border-top: 2px dashed #999; margin-top:0;">
 
         <div class='row align-items-end' style="margin-bottom: 0em;" >
             
-            <div class="col float-left">
-                <p id="kfcess" class="float-left" style="margin-left: 50px; text-align:left; font-size:22px;">
-                    KF.CESS 1% : 
-                </p>
-            </div>
             
             <div class="col float-right" >
                 <p class="float-left" style="width:fit-content; margin-right: 25px; text-align:left; font-weight:bold; font-size:22px;">
@@ -259,26 +247,27 @@
         const qtyField = document.getElementById('qtyField');
         const freeField = document.getElementById('freeField');
         const rateField = document.getElementById('rateField');
+        const discField = document.getElementById('discField');
 
         const roundOffField = document.getElementById('roundOffInput');
-        const discountField = document.getElementById('discountInput');
-
-        const customerNameField = document.getElementById('doctorAutocomplete');
+        
+        const customerNameField = document.getElementById('dealerAutocomplete');
 
         const dateField = document.getElementById('dateField');
 
         const medicineList = model.getMedicines(path.join(__dirname,"../../database/"));
-        const doctorList = model.getDoctors(path.join(__dirname,"../../database/"));
+        const dealerList = model.getDealers(path.join(__dirname,"../../database/"));
         medicines = [];
-        doctors= [];
-        doctorAddresses = [];
+        dealers= [];
+        dealerAddresses = [];
+
+        console.log(dealerList);
 
         var globalTotalQty = 0;
         var globalTotalCgst = 0;
         var globalTotalSgst = 0;
         var globalSubTotal = 0;
         var globalBillAmount = 0;
-        var globalKfcess = 0;
         var globalDiscount = 0;
         var globalRoundoff  = 0;
 
@@ -293,12 +282,11 @@
         for(const i in medicineList){
             medicines.push(medicineList[i].name);
         }
-        for (const l in doctorList){
-            doctors.push(doctorList[l].name);
-            doctorAddresses.push(doctorList[l].address);
+        for (const l in dealerList){
+            dealers.push(dealerList[l].name);
+            dealerAddresses.push(dealerList[l].address);
         }
-        console.log(doctorAddresses);
-        console.log(medicines);
+        
 
         function autocomplete(inp, arr, address) {
             /*the autocomplete function takes two arguments,
@@ -333,10 +321,10 @@
                         /*insert the value for the autocomplete text field:*/
                         inp.value = this.getElementsByTagName("input")[0].value;
                         if(address!=undefined){
-                            addressField = document.getElementById('doctorAddress');
-                            for (doctor in doctorList){
-                                if(inp.value===doctorList[doctor].name){
-                                    addressField.innerHTML = address[doctor];
+                            addressField = document.getElementById('dealerAddress');
+                            for (dealer in dealerList){
+                                if(inp.value===dealerList[dealer].name){
+                                    addressField.innerHTML = address[dealer];
                                 }
                             }
                         }
@@ -408,7 +396,7 @@
             });
         }
 
-        autocomplete(customerNameField,doctors,doctorAddresses);
+        autocomplete(customerNameField,dealers,dealerAddresses);
         autocomplete(nameField, medicines);
 
         var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
@@ -433,17 +421,12 @@
 
         addToBillButton.addEventListener('click',()=>{
             console.log("Add button is clicked!");
-            if(nameField.value==='' || qtyField.value==='' || freeField.value==='' || rateField.value===''){
+            if(nameField.value==='' || qtyField.value==='' || freeField.value==='' || rateField.value==='' || discField.value===''){
                 msg.innerHTML = 'Please enter a valid response';
                 setTimeout(() =>msg.innerHTML='',3000);
             }else{
                 for(const i in medicineList){
                     if(nameField.value===medicineList[i].name){
-                        if( (parseInt(qtyField.value)+parseInt(freeField.value)) > parseInt(medicineList[i].stock) ) {
-                            msg.innerHTML = `Enter a quantity avaliable within stock. Current stock = ${medicineList[i].stock}. You entered ${qtyField.value} + ${freeField.value} = ${parseInt(qtyField.value)+parseInt(freeField.value)}`;
-                            setTimeout(() =>msg.innerHTML='',10000);
-                        }else{
-                        
                             
                             var newRow   = billTable.insertRow();
 
@@ -493,17 +476,22 @@
                             rateCell.appendChild(rateText);
                             rateCell.className = "bill-row-item";
 
-                            var mrpCell  = newRow.insertCell(9);
+                            var discCell  = newRow.insertCell(9);
+                            var discText  = document.createTextNode(discField.value);
+                            discCell.appendChild(discText);
+                            discCell.className = "bill-row-item";
+
+                            var mrpCell  = newRow.insertCell(10);
                             var mrpText  = document.createTextNode(medicineList[i].mrp);
                             mrpCell.appendChild(mrpText);
                             mrpCell.className = "bill-row-item";
 
-                            var cgstCell  = newRow.insertCell(10);
+                            var cgstCell  = newRow.insertCell(11);
                             var cgstText  = document.createTextNode('6.0');
                             cgstCell.appendChild(cgstText);
                             cgstCell.className = "bill-row-item";
 
-                            var sgstCell  = newRow.insertCell(11);
+                            var sgstCell  = newRow.insertCell(12);
                             var sgstText  = document.createTextNode('6.0');
                             sgstCell.appendChild(sgstText);
                             sgstCell.className = "bill-row-item";
@@ -513,7 +501,7 @@
 
                             var amount = quantity * rate;
 
-                            var amountCell  = newRow.insertCell(12);
+                            var amountCell  = newRow.insertCell(13);
                             var amountText  = document.createTextNode(amount);
                             amountCell.appendChild(amountText);
                             amountCell.className = "bill-row-item";
@@ -521,20 +509,23 @@
                             const rowNumber = billTable.rows.length;
  
                             var totalQty = 0;
+                            var totalDisc = 0;
                             var totalCgst = 0;
                             var totalSgst = 0;
                             var subTotal = 0;
 
                             for (var k=0; k<billTable.rows.length; k++ ){
                                 totalQty += parseInt(billTable.rows[k].cells[6].innerHTML) + parseInt(billTable.rows[k].cells[7].innerHTML);
-                                subTotal += parseFloat(billTable.rows[k].cells[12].innerHTML);
-                                totalCgst += ((parseFloat(billTable.rows[k].cells[12].innerHTML) * 6)/100)
-                                totalSgst += ((parseFloat(billTable.rows[k].cells[12].innerHTML) * 6)/100)
+                                subTotal += parseFloat(billTable.rows[k].cells[13].innerHTML);
+                                totalDisc += ((parseFloat(billTable.rows[k].cells[8].innerHTML) * parseFloat(billTable.rows[k].cells[9].innerHTML)) /100);
+                                totalCgst += ((parseFloat(billTable.rows[k].cells[13].innerHTML) * 6)/100)
+                                totalSgst += ((parseFloat(billTable.rows[k].cells[13].innerHTML) * 6)/100)
                                 
                                 globalTotalQty = totalQty;
                                 globalSubTotal = subTotal;
                                 globalTotalCgst = totalCgst;
                                 globalTotalSgst = totalSgst;
+                                globalDiscount = totalDisc;
 
                             }
 
@@ -543,16 +534,16 @@
                             document.getElementById('itemsAndQty').innerHTML = `TOTAL ITEMS : ${rowNumber}<br/>
                             TOTAL QTY : ${totalQty}<br/>`;
                             document.getElementById('totals').innerHTML = `SUB TOTAL : ${subTotal} <br/>
+                            TOTAL DISCOUNT : ${totalDisc}<br/>
                             TOTAL SGST : ${totalSgst}<br/>
                             TOTAL CGST : ${totalCgst}`;
-                            document.getElementById('kfcess').innerHTML =  `KF.CESS 1% : ${kfcess} `;
-
-                            var billAmount = subTotal + totalSgst + totalCgst + kfcess;
+                            
+                            var billAmount = subTotal + totalSgst + totalCgst - totalDisc;
                             globalBillAmount = billAmount;
                             document.getElementById('finalAmount').innerHTML = billAmount;
                             var inwords = inWords(parseInt(billAmount));
                             document.getElementById('finalAmountInWords').innerHTML = `Rs. ${inwords}`;
-                        }
+                        
                     }else{
                         msg.innerHTML = 'Please select a valid medicine name';
                         setTimeout(() =>msg.innerHTML='',3000);
@@ -565,28 +556,23 @@
 
         updatePriceButton.addEventListener('click',()=>{
             console.log("update njekki");
-            var discount = parseFloat(discountField.value);
+           
             var roundoff = parseFloat(roundOffField.value);
-            console.log(`Discount is ${discount}`);
+           
             console.log(`Roundoff is ${roundoff}`);
             console.log('After processing');
-            if(isNaN(discount)){
-                discount = 0.0;
-            }
             if(isNaN(roundoff)){
                 roundoff = 0.0;
             }
-            console.log(`Discount is ${discount}`);
+            
             console.log(`Roundoff is ${roundoff}`);
-            if(discount!=NaN && roundoff!=NaN){
+            if(roundoff!=NaN){
                 var finalBillAmount = document.getElementById('finalAmount').innerHTML;
 
-                globalDiscount = discount;
                 globalRoundoff = roundoff;
                 console.log(finalBillAmount);            
                 var finalAmount = parseFloat(finalBillAmount);
                 console.log(finalAmount);
-                finalAmount -= discount;
                 finalAmount += roundoff;
                 document.getElementById('finalAmount').innerHTML = finalAmount;
                 var inwords = inWords(parseInt(finalAmount));
@@ -604,7 +590,7 @@
             var billRowStarting = 1;
             var billRowEnding = billRowStarting + billTable.rows.length;
             
-            const currentRows= model.getSalesBillRows(path.join(__dirname,"../../database/"));
+            const currentRows= model.getPurchaseBillRows(path.join(__dirname,"../../database/"));
 
             console.log(currentRows);
 
@@ -625,9 +611,9 @@
                 //console.log('ivide keri');
                 let keyValueBillRow = {columns: [], values: []}
                 
-                const billRowAttributes = ['MFR','NAME','PACK','HSN','BATCH','EXP','QTY','FREE','RATE','MRP','CGST','SGST','AMNT'];
+                const billRowAttributes = ['MFR','NAME','PACK','HSN','BATCH','EXP','QTY','FREE','RATE','DISC','MRP','CGST','SGST','AMNT'];
                 
-                for (var q =0; q<=12; q++){
+                for (var q =0; q<=13; q++){
                 keyValueBillRow.columns.push(billRowAttributes[q]);
                 keyValueBillRow.values.push(billTable.rows[u].cells.item(q).innerHTML);
                 }
@@ -640,7 +626,7 @@
                 console.log('Going to print row');
                 console.log(rows[item]);
                 
-                model.saveSalesBillRow(path.join(__dirname,"../../database/"),'salesbillrow', 'salesbillrow.db', rows[item], function () {
+                model.savePurchaseBillRow(path.join(__dirname,"../../database/"),'purchasebillrow', 'purchasebillrow.db', rows[item], function () {
                     console.log(`Wrote Row!`);
                 });
 
@@ -650,7 +636,7 @@
                     if(rows[item].values[1] == medicineList[i].name){
                         console.log(medicineList[i].stock);
                         var stock = parseInt(medicineList[i].stock);
-                        var newStock = stock - parseInt(rows[item].values[6]) - parseInt(rows[item].values[7]);
+                        var newStock = stock + parseInt(rows[item].values[6]) + parseInt(rows[item].values[7]);
                         console.log(newStock);
                         medicineList[i].stock = newStock;
 
@@ -681,8 +667,8 @@
             //console.log(rows);
             let keyValueBill = {columns: [], values: []};
             
-            const billAttributes = ['doctor','date','billRowStarting','billRowEnding','totalItems','totalQuantity',
-            'subtotal','totalCgst','totalSgst','discount','roundoff','kfcess','billAmount'];
+            const billAttributes = ['dealer','date','billRowStarting','billRowEnding','totalItems','totalQuantity',
+            'subtotal','totalDiscount','totalCgst','totalSgst','roundoff','billAmount'];
             
             const billAttributeValues = [customerNameField.value,today,billRowStarting,billRowEnding,billTable.rows.length,
                 globalTotalQty,globalSubTotal,globalTotalCgst,globalTotalSgst,globalDiscount,globalRoundoff,globalKfcess,globalBillAmount];
@@ -696,7 +682,7 @@
 
             const msg = document.getElementById('msg');
             console.log(keyValueBill);
-            model.saveSalesBill(path.join(__dirname,"../../database/"),'salesbill', 'salesbill.db', keyValueBill, function () {
+            model.savePurchaseBill(path.join(__dirname,"../../database/"),'purchasebill', 'purchasebill.db', keyValueBill, function () {
                 console.log(`Wrote Bill into DB!`);
                 msg.innerHTML = 'New Bill Created';
                 setTimeout(() =>msg.innerHTML="",3000);
