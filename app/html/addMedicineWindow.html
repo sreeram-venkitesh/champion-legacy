@@ -32,8 +32,13 @@
                 <label style='font-size:20px'>Enter Current Stock</label>
                 <input type='text' id='stock' autofocus>
             </div>
-            <br/>
-            <button class='btn waves-effect waves-light' type="submit">Create!</button>
+            <div style="text-align: center;">
+                <br/>
+                <label style="font-size: 20px; font-weight:bold; color:black;" id="msg"></label>
+                <br/>
+                <br/>
+                <button class='btn waves-effect waves-light' style="text-align:center" type="submit">Create!</button>
+            </div>
         </form>
     </div>
 
@@ -67,6 +72,9 @@
             
             model.saveFormData(path.join(__dirname,"../../database/"),'medicine', 'medicine.db', keyValue, function () {
                 console.log('Write kazjhinjuu')
+                msg.innerHTML = 'New Medicine Information Added!';
+                setTimeout(() =>msg.innerHTML="",5000);
+                setTimeout(()=>location.reload(),5000)
               });
         }
 

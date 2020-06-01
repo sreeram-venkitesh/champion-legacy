@@ -8,7 +8,7 @@ function addDoctor(){
     //Creating new window with custom dimensions
     addDoctorWindow = new BrowserWindow({
         width: 500,
-        height: 340,
+        height: 400,
         title:'Add New Doctor',
         webPreferences:{
             nodeIntegration:true
@@ -30,7 +30,7 @@ function addDealer(){
     //Creating new window with custom dimensions
     addDealerWindow = new BrowserWindow({
         width: 500,
-        height: 340,
+        height: 400,
         title:'Add New Dealer',
         webPreferences:{
             nodeIntegration:true
@@ -52,7 +52,7 @@ function addMedicine(){
     //Creating new window with custom dimensions
     addMedicineWindow = new BrowserWindow({
         width: 500,
-        height: 750,
+        height: 860,
         title:'Add New Medicine',
         webPreferences:{
             nodeIntegration:true
@@ -237,73 +237,82 @@ const mainMenuTemplate = [
         label: 'File',
         submenu:[
             {
-                label: 'Doctors',
+                label: 'New',
                 submenu:[
                     {
-                        label:'New',
+                        label:'Doctor',
                         click(){
                             addDoctor();
                         }
                     },
                     {
-                        label:'Modify',
-                        click(){
-                            modifyDoctor();
-                        }
-                    },
-                    {
-                        label:'Delete',
-                        click(){
-                            deleteDoctor();
-                        }
-                    }
-                ]  
-            },
-            {
-                label: 'Dealers',
-                submenu:[
-                    {
-                        label:'New',
+                        label:'Dealer',
                         click(){
                             addDealer();
                         }
                     },
                     {
-                        label:'Modify',
+                        label:'Medicine',
+                        click(){
+                            addMedicine();
+                        }
+                    }
+                ]  
+            },
+            {
+                label: 'Modify',
+                submenu:[
+                    {
+                        label:'Doctor',
+                        click(){
+                            modifyDoctor();
+                        }
+                    },
+                    {
+                        label:'Dealer',
                         click(){
                             modifyDealer();
                         }
                     },
                     {
-                        label:'Delete',
+                        label:'Medicine',
                         click(){
-                            deleteDealer();
+                            modifyMedicine();
                         }
                     }
                 ]
             },
             {
-                label:'Medicines',
+                label:'Delete Records',
                 submenu:[
                     {
-                        label:'New',
+                        label:'Doctor',
                         click(){
-                            addMedicine();
+                            deleteDoctor();
                         }
                     },
                     {
-                        label:'Modify',
+                        label:'Dealer',
                         click(){
-                            modifyMedicine();
+                            deleteDealer();
                         }
                     },
                     {
-                        label:'Delete',
+                        label:'Medicine',
                         click(){
                             deleteMedicine();
                         }
                     }
                 ]
+            },
+            {
+                type:'separator'
+            },
+            {
+                label:'Preferences',
+                click(){
+                    console.log("preferences clicked");
+                }
             },
             {
                 label:'Quit',
@@ -318,64 +327,78 @@ const mainMenuTemplate = [
         label:'Transactions',
         submenu:[
             {
-                label:'Sale',
+                label:'New Sales Bill',
+                click(){
+                    newSalesBill()
+                }
+            },
+            {
+                label:'New Purchase Bill'  
+            },
+            {
+                type:'separator'
+            },
+            {
+                label:'Sales Bill Actions',
                 submenu:[
                     {
-                        label:'New',
-                        click(){
-                            newSalesBill()
-                        }
+                        label:'Modify Sales Bills'
                     },
                     {
-                        label:'Modify'
-                    },
-                    {
-                        label:'Delete'
+                        label:'Delete Sales Bills'
                     }
                 ]
             },
             {
-                label:'Purchase',
+                label:'Purchase Bill Actions',
                 submenu:[
                     {
-                        label:'New',
-                        
+                        label:'Modify Purchase Bills'
                     },
                     {
-                        label:'Modify'
-                    },
-                    {
-                        label:'Delete'
+                        label:'Delete Purchase Bills'
                     }
                 ]
             },
             {
-                label:'Sales Return'
+                type:'separator'
             },
             {
-                label:'Purchase Return'
+                label:'New Sales Return'
+            },
+            {
+                label:'New Purchase Return'
             }
         ]
     },
     {
         label:'Stocks',
         submenu:[
-
+            {
+                label:'Stock Viewer'
+            },
+            {
+                label:'Stock Analysis'
+            },
+            {
+                type:'separator'
+            },
+            {
+                label:'Short Expiry List'
+            },
+            {
+                label:'Expiry Calendar'
+            }
         ]
     },
     {
-        label:'Books',
+        label:'Bill Books',
         submenu:[
             {
-                label:'Bill Books',
-                submenu:[
-                    {
-                        label:'Sales Bills Book',
-                        click(){
-                            salesBillBook();
-                        }
-                    }
-                ]
+                label:'Sales Bills Book',
+                click(){
+                    salesBillBook();
+                }
             }
 
         ]
@@ -383,6 +406,30 @@ const mainMenuTemplate = [
     {
         label:'Reports',
         submenu:[
+            {
+                label:'Sales Reports'
+            },
+            {
+                label:'Purchase Reports'
+            },
+            {
+                type:'separator'
+            },
+            {
+                label:'Stock Report'
+            },
+            {
+                type:'separator'
+            },
+            {
+                label:'Doctor Wise Reports'
+            },
+            {
+                label:'Dealer Wise Reports'
+            },
+            {
+                label:'Medicine/Product Wise Reports'
+            }
 
         ]
     },
@@ -417,7 +464,21 @@ const mainMenuTemplate = [
     {
         label:'Help',
         submenu:[
-
+            {
+                label:'Tutorial'
+            },
+            {
+                label:'Documentation'
+            },
+            {
+                type:'separator'
+            },
+            {
+                label:'About Us'
+            },
+            {
+                label:'Feedback'
+            }
         ]
     }
 ];

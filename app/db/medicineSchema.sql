@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "medicine" (
 	 "medicine_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	 "name" TEXT(255,0) NOT NULL,
+	 "name" TEXT(255,0) NOT NULL UNIQUE,
 	 "manufacturer" TEXT(255,0) NOT NULL,
       "hsn" TEXT(255,0) NOT NULL,
       "batch" TEXT(255,0) NOT NULL,
